@@ -19,7 +19,7 @@
     *   **Sistema de Pestañas:** Se implementó una vista separada para móviles ("Editor" vs "Vista Previa").
     *   **Navegación:** Nueva barra de navegación inferior para cambiar de modo fácilmente.
     *   **Mejoras de UI:** Botones flotantes ajustados para no superponerse con la navegación.
-    *   **Soporte Tablet:** Se extendió el diseño de pestañas móvil a las tablets y **iPad Pro** (hasta 1280px).
+    *   **Soporte Tablet:** Se extendió el diseño de pestañas móvil a las tablets y **iPad Pro** (Punto de corte personalizado: 1050px para evitar afectar a portátiles pequeños).
 
 ## 🚀 Siguientes Pasos (Pendientes):
 *   **Despliegue Final:** (Completado) Cambios sincronizados.
