@@ -133,12 +133,12 @@ export default function App() {
     <div className="flex flex-col h-screen overflow-hidden text-slate-900 dark:text-slate-100 font-sans">
 
       {/* Header */}
-      <header className="h-16 flex-shrink-0 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-4 lg:px-6 flex items-center justify-between z-30 shadow-sm relative">
+      <header className="h-16 flex-shrink-0 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-4 xl:px-6 flex items-center justify-between z-30 shadow-sm relative">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center text-white shadow-lg shadow-blue-600/20">
             <LayoutGrid size={24} />
           </div>
-          <h1 className="font-display font-bold text-lg lg:text-xl tracking-tight">{t.appTitle}</h1>
+          <h1 className="font-display font-bold text-lg xl:text-xl tracking-tight">{t.appTitle}</h1>
         </div>
 
         <div className="flex items-center gap-4">
@@ -184,7 +184,7 @@ export default function App() {
       <div className="flex flex-1 overflow-hidden">
 
         {/* Sidebar */}
-        <aside className={`w-full lg:w-[400px] flex-shrink-0 flex flex-col bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 z-10 ${mobileView === 'preview' ? 'hidden lg:flex' : 'flex'}`}>
+        <aside className={`w-full xl:w-[400px] flex-shrink-0 flex flex-col bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 z-10 ${mobileView === 'preview' ? 'hidden xl:flex' : 'flex'}`}>
           <div className="flex border-b border-slate-200 dark:border-slate-800">
             <button
               className={`flex-1 py-4 text-sm font-bold flex items-center justify-center gap-2 border-b-2 transition-colors ${activeTab === 'content' ? 'border-primary text-primary' : 'border-transparent text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'}`}
@@ -252,7 +252,7 @@ export default function App() {
         </aside>
 
         {/* Preview Area */}
-        <main className={`flex-1 bg-slate-100 dark:bg-black/20 overflow-auto p-4 lg:p-8 flex justify-center ${mobileView === 'editor' ? 'hidden lg:flex' : 'flex'}`}>
+        <main className={`flex-1 bg-slate-100 dark:bg-black/20 overflow-auto p-4 xl:p-8 flex justify-center ${mobileView === 'editor' ? 'hidden xl:flex' : 'flex'}`}>
           <div className="relative">
             <Preview
               state={state}
@@ -263,7 +263,7 @@ export default function App() {
         </main>
 
         {/* Floating Actions */}
-        <div className={`fixed right-4 lg:right-8 flex flex-col gap-4 transition-all duration-300 z-40 ${mobileView === 'editor' ? 'translate-y-[200%] lg:translate-y-0 bottom-24 lg:bottom-8' : 'bottom-24 lg:bottom-8'}`}>
+        <div className={`fixed right-4 xl:right-8 flex flex-col gap-4 transition-all duration-300 z-40 ${mobileView === 'editor' ? 'translate-y-[200%] xl:translate-y-0 bottom-24 xl:bottom-8' : 'bottom-24 xl:bottom-8'}`}>
           <button
             onClick={handlePrint}
             className="w-14 h-14 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 rounded-full shadow-xl flex items-center justify-center hover:bg-slate-50 dark:hover:bg-slate-700 transition-transform hover:scale-105"
@@ -281,7 +281,7 @@ export default function App() {
         </div>
 
         {/* Mobile Navigation Bar */}
-        <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 flex z-50 pb-2">
+        <div className="xl:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 flex z-50 pb-2">
           <button
             onClick={() => setMobileView('editor')}
             className={`flex-1 p-4 flex flex-col items-center gap-1 ${mobileView === 'editor' ? 'text-primary font-bold' : 'text-slate-500 dark:text-slate-400'}`}

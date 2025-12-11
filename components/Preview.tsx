@@ -92,7 +92,7 @@ export const Preview: React.FC<Props> = ({ state, bannerState, setBannerState })
         const handleResize = () => {
             // 816 is the fixed width of the paper
             // We want some padding (e.g. 32px on each side = 64px total, or less on mobile)
-            const padding = window.innerWidth < 1024 ? 32 : 64;
+            const padding = window.innerWidth < 1280 ? 32 : 64;
             const availableWidth = window.innerWidth - padding;
 
             // If screen matches or is larger than paper, scale is 1. Else shrink.
