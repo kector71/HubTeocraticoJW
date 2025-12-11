@@ -1,6 +1,13 @@
 <div align="center">
-  <h1>🏛️ Hub Teocrático</h1>
+  <h1>🏛️ Hub Teocrático JW</h1>
   <p><strong>Generador de Programas de Cartelera de Congregación</strong></p>
+  
+  <p>
+    <a href="https://kector71.github.io/HubTeocratico/">
+      <strong>🔗 ABRIR APLICACIÓN WEB</strong>
+    </a>
+  </p>
+
   <p>Una herramienta web moderna, rápida y sencilla para crear, personalizar y exportar programas teocráticos.</p>
 </div>
 
@@ -25,7 +32,7 @@ Esta aplicación permite generar carteleras de manera profesional y eficiente pa
 
 *   **📄 Exportación Inteligente a PDF**:
     *   Genera un **único archivo PDF continuo** (estilo "sábana") con todo el programa del mes (o meses).
-    *   Ideal para compartir digitalmente por WhatsApp, Telegram o correo electrónico sin cortes de página que dificulten la lectura.
+    *   Ideal para compartir digitalmente por WhatsApp, Telegram o correo electrónico sin cortes de página molestos.
 
 *   **🔒 Privacidad y Rapidez**: 
     *   Funciona enteramente en el navegador. No requiere registro de usuarios ni sube información sensible a la nube.

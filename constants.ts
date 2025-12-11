@@ -42,7 +42,7 @@ export const INITIAL_STYLES: StylesState = {
 
 export const TRANSLATIONS = {
   es: {
-    appTitle: "Hub Teocrático",
+    appTitle: "Hub Teocrático JW",
     selectTemplate: "Seleccionar Plantilla",
     templateUshers: "Acomodadores",
     templateCleaning: "Aseo",
@@ -80,7 +80,7 @@ export const TRANSLATIONS = {
     newMonth: "Nuevo Mes",
   },
   en: {
-    appTitle: "Theocratic Hub",
+    appTitle: "Hub Teocrático JW",
     selectTemplate: "Select Template",
     templateUshers: "Ushers",
     templateCleaning: "Cleaning",
@@ -118,7 +118,7 @@ export const TRANSLATIONS = {
     newMonth: "New Month",
   },
   pt: {
-    appTitle: "Hub Teocrático",
+    appTitle: "Hub Teocrático JW",
     selectTemplate: "Selecionar Modelo",
     templateUshers: "Indicadores",
     templateCleaning: "Limpeza",
@@ -156,7 +156,7 @@ export const TRANSLATIONS = {
     newMonth: "Novo Mês",
   },
   fr: {
-    appTitle: "Hub Théocratique",
+    appTitle: "Hub Teocrático JW",
     selectTemplate: "Sélectionner un Modèle",
     templateUshers: "Accueil",
     templateCleaning: "Nettoyage",
@@ -194,7 +194,7 @@ export const TRANSLATIONS = {
     newMonth: "Nouveau Mois",
   },
   it: {
-    appTitle: "Hub Teocratico",
+    appTitle: "Hub Teocrático JW",
     selectTemplate: "Seleziona Modello",
     templateUshers: "Uscieri",
     templateCleaning: "Pulizie",
@@ -232,7 +232,7 @@ export const TRANSLATIONS = {
     newMonth: "Nuovo Mese",
   },
   ru: {
-    appTitle: "Теократический Хаб",
+    appTitle: "Hub Teocrático JW",
     selectTemplate: "Выберите шаблон",
     templateUshers: "Распорядители",
     templateCleaning: "Уборка",
@@ -270,7 +270,7 @@ export const TRANSLATIONS = {
     newMonth: "Новый месяц",
   },
   pl: {
-    appTitle: "Centrum Teokratyczne",
+    appTitle: "Hub Teocrático JW",
     selectTemplate: "Wybierz szablon",
     templateUshers: "Porządkowi",
     templateCleaning: "Sprzątanie",
