@@ -184,7 +184,7 @@ export default function App() {
       <div className="flex flex-1 overflow-hidden">
 
         {/* Sidebar */}
-        <aside className={`w-full min-[1050px]:w-[400px] flex-shrink-0 flex flex-col bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 z-10 ${mobileView === 'preview' ? 'hidden min-[1050px]:flex' : 'flex'}`}>
+        <aside className={`w-full min-[1050px]:w-[320px] flex-shrink-0 flex flex-col bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 z-10 ${mobileView === 'preview' ? 'hidden min-[1050px]:flex' : 'flex'}`}>
           <div className="flex border-b border-slate-200 dark:border-slate-800">
             <button
               className={`flex-1 py-4 text-sm font-bold flex items-center justify-center gap-2 border-b-2 transition-colors ${activeTab === 'content' ? 'border-primary text-primary' : 'border-transparent text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'}`}
@@ -202,7 +202,7 @@ export default function App() {
             </button>
           </div>
 
-          <div className="flex-1 overflow-y-auto p-6 scrollbar-thin">
+          <div className="flex-1 overflow-y-auto p-4 md:p-6 scrollbar-thin">
             {activeTab === 'content' ? (
               <ContentControl state={state} updateState={updateState} />
             ) : (
