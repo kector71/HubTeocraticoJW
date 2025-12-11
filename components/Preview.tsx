@@ -220,7 +220,7 @@ export const Preview: React.FC<Props> = ({ state, bannerState, setBannerState })
                                                                 <CalendarDays size={24} className="text-zinc-400" />
                                                             </div>
                                                             <p className="font-medium text-zinc-600">{t.noDatesTitle}</p>
-                                                            <p className="text-xs max-w-[200px] mx-auto">{t.noDatesDesc}</p>
+                                                            <p className="text-xs text-zinc-500">{t.noDatesDesc}</p>
                                                         </div>
                                                     </td>
                                                 </tr>
