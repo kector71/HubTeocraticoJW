@@ -88,6 +88,10 @@ export const Preview: React.FC<Props> = ({ state, bannerState, setBannerState })
     const [scale, setScale] = useState(1);
     const containerRef = useRef<HTMLDivElement>(null);
 
+    // Auto-sizing title logic
+    const [adjustedTitleFontSize, setAdjustedTitleFontSize] = useState<number>(state.styles.title.fontSize);
+    const titleRef = useRef<HTMLHeadingElement>(null);
+
     useEffect(() => {
         const handleResize = () => {
             // 816 is the fixed width of the paper
@@ -105,6 +109,40 @@ export const Preview: React.FC<Props> = ({ state, bannerState, setBannerState })
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
+    // Auto-adjust title font size to fit in one line
+    useEffect(() => {
+        if (!titleRef.current) return;
+
+        const adjustTitleSize = () => {
+            const titleElement = titleRef.current;
+            if (!titleElement) return;
+
+            // Start with the configured font size
+            let currentSize = state.styles.title.fontSize;
+            setAdjustedTitleFontSize(currentSize);
+
+            // Force immediate layout update
+            titleElement.style.fontSize = `${currentSize}px`;
+
+            // Calculate max width (816 - padding on both sides)
+            const maxWidth = 816 - (1.5 * 16 * 2); // 816 - (1.5rem * 2 sides in px)
+
+            // Check if title wraps to multiple lines by comparing scrollWidth to clientWidth
+            // Reduce font size until it fits
+            let iterations = 0;
+            while (titleElement.scrollWidth > maxWidth && currentSize > 12 && iterations < 50) {
+                currentSize -= 1;
+                titleElement.style.fontSize = `${currentSize}px`;
+                setAdjustedTitleFontSize(currentSize);
+                iterations++;
+            }
+        };
+
+        // Small delay to ensure DOM is ready
+        const timeoutId = setTimeout(adjustTitleSize, 50);
+        return () => clearTimeout(timeoutId);
+    }, [state.styles.title.fontSize, state.template, state.language]);
+
     return (
         <div ref={containerRef} className="flex justify-center w-full" style={{ height: 1056 * scale, marginBottom: 20 }}>
             <div
@@ -114,15 +152,30 @@ export const Preview: React.FC<Props> = ({ state, bannerState, setBannerState })
             >
                 <div className="flex flex-col h-full flex-grow relative">
 
-                    {/* Title - Absolutely positioned at the TOP */}
-                    <div className="absolute top-8 left-0 w-full px-6 text-center z-20 pointer-events-none">
-                        <h2 style={getStyleString(state.styles.title)} className="pointer-events-auto inline-block">
+                    {/* Title - Absolutely positioned at the TOP with Inline Styles */}
+                    <div
+                        className="w-full px-6 text-center z-20 pointer-events-none"
+                        style={{ position: 'absolute', top: '2rem', left: 0 }}
+                    >
+                        <h2
+                            ref={titleRef}
+                            style={{
+                                ...getStyleString(state.styles.title),
+                                fontSize: `${adjustedTitleFontSize}px`,
+                                whiteSpace: 'nowrap',
+                                overflow: 'hidden'
+                            }}
+                            className="pointer-events-auto inline-block"
+                        >
                             {state.template === 'acomodadores' ? t.previewTitleUshers : t.previewTitleCleaning}
                         </h2>
                     </div>
 
-                    {/* Banner Area - Absolutely positioned BELOW title */}
-                    <div className="absolute top-32 left-6 right-6 h-48 bg-zinc-100 rounded-lg overflow-hidden group border border-zinc-200 z-10 w-auto">
+                    {/* Banner Area - Absolutely positioned BELOW title with Inline Styles */}
+                    <div
+                        className="bg-zinc-100 rounded-lg overflow-hidden group border border-zinc-200 z-10 w-auto"
+                        style={{ position: 'absolute', top: '6.5rem', left: '1.5rem', right: '1.5rem', height: '12rem' }}
+                    >
                         {bannerState.image ? (
                             <div className="w-full h-full relative overflow-hidden">
                                 <img
@@ -170,7 +223,7 @@ export const Preview: React.FC<Props> = ({ state, bannerState, setBannerState })
                     </div>
 
                     {/* Dynamic Content Tables - Pushed down to clear absolute header */}
-                    <div className="flex-grow mt-[340px] px-6 space-y-4">
+                    <div className="flex-grow mt-[320px] px-6 space-y-4">
                         {state.months.map(month => {
                             const dates = getDatesForWeeks(month);
                             // We render as many rows as dates generated, picking data from month.weeks index
@@ -179,18 +232,18 @@ export const Preview: React.FC<Props> = ({ state, bannerState, setBannerState })
                                     <table className="w-full border-collapse">
                                         <thead>
                                             <tr style={getStyleString(state.styles.header)}>
-                                                <th className="p-3 text-center border-r border-white/20 w-1/4">
+                                                <th className="p-2 text-center border-r border-white/30 w-1/4">
                                                     {getMonthName(month.monthIndex, state.language).toUpperCase()}
                                                 </th>
                                                 {state.template === 'acomodadores' ? (
                                                     <>
-                                                        <th className="p-3 text-center border-r border-white/20">{t.door}</th>
-                                                        <th className="p-3 text-center border-r border-white/20">{t.auditorium}</th>
-                                                        <th className="p-3 text-center border-r border-white/20">{t.mic1}</th>
-                                                        <th className="p-3 text-center">{t.mic2}</th>
+                                                        <th className="p-2 text-center border-r border-white/30">{t.door}</th>
+                                                        <th className="p-2 text-center border-r border-white/30">{t.auditorium}</th>
+                                                        <th className="p-2 text-center border-r border-white/30">{t.mic1}</th>
+                                                        <th className="p-2 text-center">{t.mic2}</th>
                                                     </>
                                                 ) : (
-                                                    <th className="p-3 text-center">{t.assignedGroup}</th>
+                                                    <th className="p-2 text-center">{t.assignedGroup}</th>
                                                 )}
                                             </tr>
                                         </thead>
@@ -198,17 +251,17 @@ export const Preview: React.FC<Props> = ({ state, bannerState, setBannerState })
                                             {dates.length > 0 ? dates.map((dateStr, idx) => {
                                                 const weekData = month.weeks[idx] || { id: '', door: '', auditorium: '', mic1: '', mic2: '', group: '' };
                                                 return (
-                                                    <tr key={idx} className={`transition-colors hover:bg-blue-50/50 dark:hover:bg-blue-900/10 ${idx % 2 === 0 ? 'bg-white' : 'bg-zinc-50'}`}>
-                                                        <td className="p-3 text-center font-bold border-r border-zinc-200">{dateStr}</td>
+                                                    <tr key={idx} className={`transition-colors hover:bg-blue-50/50 dark:hover:bg-blue-900/10 ${idx % 2 === 0 ? 'bg-white' : 'bg-zinc-50'} border-b border-zinc-200`}>
+                                                        <td className="p-2 text-center font-bold border-r border-zinc-300">{dateStr}</td>
                                                         {state.template === 'acomodadores' ? (
                                                             <>
-                                                                <td className="p-3 text-center border-r border-zinc-200">{weekData.door}</td>
-                                                                <td className="p-3 text-center border-r border-zinc-200">{weekData.auditorium}</td>
-                                                                <td className="p-3 text-center border-r border-zinc-200">{weekData.mic1}</td>
-                                                                <td className="p-3 text-center">{weekData.mic2}</td>
+                                                                <td className="p-2 text-center border-r border-zinc-300">{weekData.door}</td>
+                                                                <td className="p-2 text-center border-r border-zinc-300">{weekData.auditorium}</td>
+                                                                <td className="p-2 text-center border-r border-zinc-300">{weekData.mic1}</td>
+                                                                <td className="p-2 text-center">{weekData.mic2}</td>
                                                             </>
                                                         ) : (
-                                                            <td className="p-3 text-center">{weekData.group}</td>
+                                                            <td className="p-2 text-center">{weekData.group}</td>
                                                         )}
                                                     </tr>
                                                 );
