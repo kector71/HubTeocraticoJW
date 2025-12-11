@@ -353,10 +353,10 @@ export const ContentControl: React.FC<Props> = ({ state, updateState }) => {
 
           <button
             onClick={addMonth}
-            className="w-full py-4 rounded-xl border-2 border-dashed border-slate-300 dark:border-slate-700 text-slate-500 hover:text-primary hover:border-primary hover:bg-slate-50 dark:hover:bg-slate-800/50 font-bold flex flex-col items-center justify-center gap-2 transition-all group"
+            className="w-full py-3 rounded-lg border-2 border-dashed border-slate-300 dark:border-slate-700 text-slate-500 hover:text-primary hover:border-primary hover:bg-slate-50 dark:hover:bg-slate-800/50 font-bold flex items-center justify-center gap-2 transition-all group"
           >
-            <div className="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-colors shadow-sm">
-              <Plus size={20} />
+            <div className="w-6 h-6 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-colors shadow-sm">
+              <Plus size={14} />
             </div>
             <span className="text-xs uppercase tracking-wide">{t.createNewMonth}</span>
           </button>
