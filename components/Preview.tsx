@@ -112,17 +112,10 @@ export const Preview: React.FC<Props> = ({ state, bannerState, setBannerState })
                 className="w-[816px] min-h-[1056px] bg-white shadow-xl text-black flex flex-col transition-all origin-top"
                 style={{ transform: `scale(${scale})` }}
             >
-                <div className="p-6 flex flex-col h-full flex-grow">
+                <div className="p-6 flex flex-col h-full flex-grow relative">
 
-                    {/* Title */}
-                    <div className="text-center mb-4">
-                        <h2 style={getStyleString(state.styles.title)}>
-                            {state.template === 'acomodadores' ? t.previewTitleUshers : t.previewTitleCleaning}
-                        </h2>
-                    </div>
-
-                    {/* Banner Area */}
-                    <div className="relative w-full h-48 bg-zinc-100 rounded-lg overflow-hidden mb-4 group border border-zinc-200">
+                    {/* Banner Area - First in flow to anchor layout, with margin for Title */}
+                    <div className="relative w-full h-48 bg-zinc-100 rounded-lg overflow-hidden mb-4 mt-16 group border border-zinc-200 shrink-0">
                         {bannerState.image ? (
                             <div className="w-full h-full relative overflow-hidden">
                                 <img
@@ -167,6 +160,13 @@ export const Preview: React.FC<Props> = ({ state, bannerState, setBannerState })
                                 <ZoomIn size={16} className="text-white" />
                             </div>
                         </div>
+                    </div>
+
+                    {/* Title - Absolutely positioned to not affect flow */}
+                    <div className="absolute top-6 left-0 w-full px-6 text-center z-10 pointer-events-none">
+                        <h2 style={getStyleString(state.styles.title)} className="pointer-events-auto inline-block">
+                            {state.template === 'acomodadores' ? t.previewTitleUshers : t.previewTitleCleaning}
+                        </h2>
                     </div>
 
                     {/* Dynamic Content Tables */}
