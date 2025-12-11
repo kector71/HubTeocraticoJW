@@ -214,13 +214,13 @@ export const Preview: React.FC<Props> = ({ state, bannerState, setBannerState })
                                                 );
                                             }) : (
                                                 <tr>
-                                                    <td colSpan={5} className="p-12 text-center text-zinc-400">
-                                                        <div className="flex flex-col items-center justify-center gap-2">
-                                                            <div className="w-12 h-12 rounded-full bg-zinc-100 flex items-center justify-center mb-2">
-                                                                <CalendarDays size={24} className="text-zinc-400" />
+                                                    <td colSpan={5} className="p-6 text-center text-zinc-400">
+                                                        <div className="flex flex-col items-center justify-center gap-1">
+                                                            <div className="w-8 h-8 rounded-full bg-zinc-100 flex items-center justify-center mb-1">
+                                                                <CalendarDays size={16} className="text-zinc-400" />
                                                             </div>
-                                                            <p className="font-medium text-zinc-600">{t.noDatesTitle}</p>
-                                                            <p className="text-xs text-zinc-500">{t.noDatesDesc}</p>
+                                                            <p className="font-medium text-zinc-600 text-sm">{t.noDatesTitle}</p>
+                                                            <p className="text-[10px] text-zinc-500">{t.noDatesDesc}</p>
                                                         </div>
                                                     </td>
                                                 </tr>
