@@ -324,6 +324,12 @@ export const FONTS = [
   "'Playfair Display', serif"
 ];
 
+// Helper to get localized month name
+export const getMonthName = (monthIndex: number, locale: string = 'es') => {
+  const date = new Date(2024, monthIndex, 1);
+  return new Intl.DateTimeFormat(locale, { month: 'long' }).format(date);
+};
+
 export const MONTH_NAMES = [
   "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
   "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"

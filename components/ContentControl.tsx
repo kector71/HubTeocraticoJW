@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { AppState, MonthData, TemplateType, WeekData } from '../types';
-import { TRANSLATIONS, MONTH_NAMES } from '../constants';
+import { TRANSLATIONS, getMonthName } from '../constants';
 import { PlusCircle, Trash2, ChevronDown, ChevronUp, Upload, Plus } from 'lucide-react';
 import { Select } from './Select';
 
@@ -186,7 +186,7 @@ export const ContentControl: React.FC<Props> = ({ state, updateState }) => {
                   </div>
                   <div>
                     <h4 className="font-bold text-sm text-slate-800 dark:text-slate-200">
-                      {MONTH_NAMES[month.monthIndex]} {month.year}
+                      {getMonthName(month.monthIndex, state.language)} {month.year}
                     </h4>
                     <p className="text-[10px] text-slate-400 font-medium">{month.weeks.length} Semanas</p>
                   </div>
@@ -226,7 +226,10 @@ export const ContentControl: React.FC<Props> = ({ state, updateState }) => {
                       <span className="text-[10px] uppercase font-bold text-slate-400">{t.month}</span>
                       <div className="relative">
                         <Select
-                          options={MONTH_NAMES.map((name, i) => ({ value: i, label: name }))}
+                          options={Array.from({ length: 12 }, (_, i) => ({
+                            value: i,
+                            label: getMonthName(i, state.language)
+                          }))}
                           value={month.monthIndex}
                           onChange={(value) => updateMonth(month.id, { monthIndex: parseInt(value) })}
                         />

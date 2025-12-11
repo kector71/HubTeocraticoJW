@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { AppState, MonthData, StyleConfig } from '../types';
-import { TRANSLATIONS, MONTH_NAMES } from '../constants';
+import { TRANSLATIONS, getMonthName } from '../constants';
 import { ZoomIn, ZoomOut, ArrowUp, ArrowDown, ArrowLeft, ArrowRight, Image as ImageIcon, CalendarDays } from 'lucide-react';
 
 interface Props {
@@ -180,7 +180,7 @@ export const Preview: React.FC<Props> = ({ state, bannerState, setBannerState })
                                         <thead>
                                             <tr style={getStyleString(state.styles.header)}>
                                                 <th className="p-3 text-center border-r border-white/20 w-1/4">
-                                                    {MONTH_NAMES[month.monthIndex].toUpperCase()}
+                                                    {getMonthName(month.monthIndex, state.language).toUpperCase()}
                                                 </th>
                                                 {state.template === 'acomodadores' ? (
                                                     <>
