@@ -25,6 +25,7 @@
     *   **Corrección de Textos:** Se cambió "MICRO" por "Micrófono" en el programa de Acomodadores.
     *   **Localización:** Los encabezados de las tablas (incluyendo el nombre del mes) y los selectores ahora se traducen automáticamente según el idioma seleccionado. También se tradujo el mensaje de "No hay fechas generadas".
     *   **Modo Oscuro Premium (Zinc):** Se eliminó el tinte azul del modo oscuro cambiando la paleta de colores de 'Slate' a 'Zinc' (Gris neutro de metal). El fondo ahora es casi negro puro (`#09090b`), eliminando la sensación de "azul".
+    *   **PDF Optimizado:** Se redujeron los márgenes internos y los espacios verticales en el documento PDF para aprovechar mejor el espacio de la hoja.
 
 ## 🚀 Siguientes Pasos (Pendientes):
 *   **Despliegue Final:** (Completado) Cambios sincronizados.

@@ -107,7 +107,7 @@ export default function App() {
     if (!content || typeof window.html2pdf === 'undefined') return;
 
     // Calculate dynamic height to ensure single page
-    const height = Math.max(content.offsetHeight + 50, 1056); // Min height of A4
+    const height = Math.max(content.offsetHeight + 20, 1056); // Min height of A4
 
     const opt = {
       margin: 0,

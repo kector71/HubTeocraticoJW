@@ -112,17 +112,17 @@ export const Preview: React.FC<Props> = ({ state, bannerState, setBannerState })
                 className="w-[816px] min-h-[1056px] bg-white shadow-xl text-black flex flex-col transition-all origin-top"
                 style={{ transform: `scale(${scale})` }}
             >
-                <div className="p-12 flex flex-col h-full flex-grow">
+                <div className="p-6 flex flex-col h-full flex-grow">
 
                     {/* Title */}
-                    <div className="text-center mb-8">
+                    <div className="text-center mb-4">
                         <h2 style={getStyleString(state.styles.title)}>
                             {state.template === 'acomodadores' ? t.previewTitleUshers : t.previewTitleCleaning}
                         </h2>
                     </div>
 
                     {/* Banner Area */}
-                    <div className="relative w-full h-48 bg-zinc-100 rounded-lg overflow-hidden mb-8 group border border-zinc-200">
+                    <div className="relative w-full h-48 bg-zinc-100 rounded-lg overflow-hidden mb-4 group border border-zinc-200">
                         {bannerState.image ? (
                             <div className="w-full h-full relative overflow-hidden">
                                 <img
@@ -170,7 +170,7 @@ export const Preview: React.FC<Props> = ({ state, bannerState, setBannerState })
                     </div>
 
                     {/* Dynamic Content Tables */}
-                    <div className="space-y-8 flex-grow">
+                    <div className="space-y-4 flex-grow">
                         {state.months.map(month => {
                             const dates = getDatesForWeeks(month);
                             // We render as many rows as dates generated, picking data from month.weeks index
@@ -233,7 +233,7 @@ export const Preview: React.FC<Props> = ({ state, bannerState, setBannerState })
                     </div>
 
                     {/* Footer */}
-                    <div className="mt-8 pt-6 border-t border-zinc-100 text-center">
+                    <div className="mt-4 pt-4 border-t border-zinc-100 text-center">
                         <div
                             style={getStyleString(state.styles.footer)}
                             dangerouslySetInnerHTML={{ __html: state.styles.footerText }}
