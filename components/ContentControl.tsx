@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { AppState, MonthData, TemplateType, WeekData } from '../types';
 import { TRANSLATIONS, MONTH_NAMES } from '../constants';
 import { PlusCircle, Trash2, ChevronDown, ChevronUp, Upload, Plus } from 'lucide-react';
+import { Select } from './Select';
 
 interface Props {
   state: AppState;
@@ -124,17 +125,14 @@ export const ContentControl: React.FC<Props> = ({ state, updateState }) => {
           <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-2 uppercase">
             {t.selectTemplate}
           </label>
-          <div className="relative">
-            <select
-              className="w-full appearance-none rounded-lg border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 py-2.5 pl-3 pr-8 text-sm font-medium focus:ring-2 focus:ring-primary/50 outline-none transition-shadow"
-              value={state.template}
-              onChange={(e) => updateState({ template: e.target.value as TemplateType })}
-            >
-              <option value="acomodadores">{t.templateUshers}</option>
-              <option value="aseo">{t.templateCleaning}</option>
-            </select>
-            <ChevronDown size={16} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
-          </div>
+          <Select
+            options={[
+              { value: 'acomodadores', label: t.templateUshers },
+              { value: 'aseo', label: t.templateCleaning }
+            ]}
+            value={state.template}
+            onChange={(value) => updateState({ template: value as TemplateType })}
+          />
         </div>
 
         {/* Banner Upload */}
@@ -225,14 +223,11 @@ export const ContentControl: React.FC<Props> = ({ state, updateState }) => {
                     <div className="space-y-1.5">
                       <span className="text-[10px] uppercase font-bold text-slate-400">{t.month}</span>
                       <div className="relative">
-                        <select
-                          className="w-full appearance-none rounded-lg border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-3 py-2 pr-8 text-sm focus:ring-2 focus:ring-primary/50 outline-none transition-all font-medium"
+                        <Select
+                          options={MONTH_NAMES.map((name, i) => ({ value: i, label: name }))}
                           value={month.monthIndex}
-                          onChange={(e) => updateMonth(month.id, { monthIndex: parseInt(e.target.value) })}
-                        >
-                          {MONTH_NAMES.map((name, i) => <option key={i} value={i}>{name}</option>)}
-                        </select>
-                        <ChevronDown size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+                          onChange={(value) => updateMonth(month.id, { monthIndex: parseInt(value) })}
+                        />
                       </div>
                     </div>
                   </div>
