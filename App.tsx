@@ -8,6 +8,7 @@ import { Preview } from './components/Preview';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<'content' | 'styles'>('content');
+  const [mobileView, setMobileView] = useState<'editor' | 'preview'>('editor');
   const [openStyles, setOpenStyles] = useState<Record<string, boolean>>({ title: false, header: false, cell: false, footer: false });
   const [isLangMenuOpen, setIsLangMenuOpen] = useState(false);
 
@@ -183,7 +184,7 @@ export default function App() {
       <div className="flex flex-1 overflow-hidden">
 
         {/* Sidebar */}
-        <aside className="w-[400px] flex-shrink-0 flex flex-col bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 z-10">
+        <aside className={`w-full md:w-[400px] flex-shrink-0 flex flex-col bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 z-10 ${mobileView === 'preview' ? 'hidden md:flex' : 'flex'}`}>
           <div className="flex border-b border-slate-200 dark:border-slate-800">
             <button
               className={`flex-1 py-4 text-sm font-bold flex items-center justify-center gap-2 border-b-2 transition-colors ${activeTab === 'content' ? 'border-primary text-primary' : 'border-transparent text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'}`}
@@ -251,7 +252,7 @@ export default function App() {
         </aside>
 
         {/* Preview Area */}
-        <main className="flex-1 bg-slate-100 dark:bg-black/20 overflow-auto p-8 flex justify-center">
+        <main className={`flex-1 bg-slate-100 dark:bg-black/20 overflow-auto p-4 md:p-8 flex justify-center ${mobileView === 'editor' ? 'hidden md:flex' : 'flex'}`}>
           <div className="relative">
             <Preview
               state={state}
@@ -262,7 +263,7 @@ export default function App() {
         </main>
 
         {/* Floating Actions */}
-        <div className="fixed bottom-8 right-8 flex flex-col gap-4">
+        <div className={`fixed right-4 md:right-8 flex flex-col gap-4 transition-all duration-300 z-40 ${mobileView === 'editor' ? 'translate-y-[200%] md:translate-y-0 bottom-24 md:bottom-8' : 'bottom-24 md:bottom-8'}`}>
           <button
             onClick={handlePrint}
             className="w-14 h-14 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 rounded-full shadow-xl flex items-center justify-center hover:bg-slate-50 dark:hover:bg-slate-700 transition-transform hover:scale-105"
@@ -276,6 +277,24 @@ export default function App() {
             title="Download PDF"
           >
             <Download size={24} />
+          </button>
+        </div>
+
+        {/* Mobile Navigation Bar */}
+        <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 flex z-50 pb-2">
+          <button
+            onClick={() => setMobileView('editor')}
+            className={`flex-1 p-4 flex flex-col items-center gap-1 ${mobileView === 'editor' ? 'text-primary font-bold' : 'text-slate-500 dark:text-slate-400'}`}
+          >
+            <Settings size={20} />
+            <span className="text-xs">Editor</span>
+          </button>
+          <button
+            onClick={() => setMobileView('preview')}
+            className={`flex-1 p-4 flex flex-col items-center gap-1 ${mobileView === 'preview' ? 'text-primary font-bold' : 'text-slate-500 dark:text-slate-400'}`}
+          >
+            <LayoutGrid size={20} />
+            <span className="text-xs">Vista Previa</span>
           </button>
         </div>
 
