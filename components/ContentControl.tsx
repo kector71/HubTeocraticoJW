@@ -138,8 +138,8 @@ export const ContentControl: React.FC<Props> = ({ state, updateState }) => {
         </div>
 
         {/* Banner Upload */}
-        <div className="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-xl border border-slate-200 dark:border-slate-800">
-          <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-2 uppercase">
+        <div className="bg-slate-50 dark:bg-slate-800/50 p-3 rounded-xl border border-slate-200 dark:border-slate-800">
+          <label className="block text-[10px] font-bold text-slate-700 dark:text-slate-300 mb-2 uppercase">
             {t.banner}
           </label>
           <div className="relative group">
@@ -152,15 +152,15 @@ export const ContentControl: React.FC<Props> = ({ state, updateState }) => {
             />
             <label
               htmlFor="banner-upload"
-              className="flex flex-col items-center justify-center gap-2 w-full p-4 rounded-lg border-2 border-dashed border-slate-300 dark:border-slate-600 hover:border-primary dark:hover:border-primary cursor-pointer transition-all bg-white dark:bg-slate-900 group-hover:bg-slate-50 dark:group-hover:bg-slate-800"
+              className="flex items-center justify-center gap-3 w-full p-2.5 rounded-lg border-2 border-dashed border-slate-300 dark:border-slate-600 hover:border-primary dark:hover:border-primary cursor-pointer transition-all bg-white dark:bg-slate-900 group-hover:bg-slate-50 dark:group-hover:bg-slate-800"
             >
-              <div className="w-10 h-10 rounded-full bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center group-hover:scale-110 transition-transform">
-                <Upload size={18} className="text-primary" />
+              <div className="w-8 h-8 rounded-full bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center group-hover:scale-110 transition-transform">
+                <Upload size={16} className="text-primary" />
               </div>
-              <span className="text-xs font-medium text-slate-500 dark:text-slate-400 text-center">{t.uploadBanner}</span>
+              <span className="text-xs font-medium text-slate-500 dark:text-slate-400">{t.uploadBanner}</span>
             </label>
             {state.banner.image && (
-              <div className="absolute top-2 right-2 w-2 h-2 rounded-full bg-green-500 animate-pulse" title="Banner cargado" />
+              <div className="absolute top-1/2 -translate-y-1/2 right-3 w-2 h-2 rounded-full bg-green-500 animate-pulse" title="Banner cargado" />
             )}
           </div>
         </div>

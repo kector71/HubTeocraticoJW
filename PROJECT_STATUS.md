@@ -20,7 +20,7 @@
     *   **Navegación:** Nueva barra de navegación inferior para cambiar de modo fácilmente.
     *   **Mejoras de UI:** Botones flotantes ajustados para no superponerse con la navegación.
     *   **Soporte Tablet:** Se extendió el diseño de pestañas móvil a las tablets y **iPad Pro** (Punto de corte personalizado: 1050px para evitar afectar a portátiles pequeños).
-    *   **Diseño Compacto:** Se redujo el ancho de la barra lateral de 400px a 320px para mejorar el espacio visual en PC.
+    *   **Diseño Compacto:** Se redujo el ancho de la barra lateral (320px) y el tamaño del botón de subir banner.
 
 ## 🚀 Siguientes Pasos (Pendientes):
 *   **Despliegue Final:** (Completado) Cambios sincronizados.
