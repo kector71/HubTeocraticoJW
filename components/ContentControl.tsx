@@ -213,11 +213,13 @@ export const ContentControl: React.FC<Props> = ({ state, updateState }) => {
                   <div className="grid grid-cols-2 gap-3">
                     <div className="space-y-1.5">
                       <span className="text-[10px] uppercase font-bold text-slate-400">{t.year}</span>
-                      <input
-                        type="number"
-                        className="w-full rounded-lg border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-3 py-2 text-sm focus:ring-2 focus:ring-primary/50 outline-none transition-all font-medium"
+                      <Select
+                        options={Array.from({ length: 7 }, (_, i) => {
+                          const year = new Date().getFullYear() - 1 + i;
+                          return { value: year, label: String(year) };
+                        })}
                         value={month.year}
-                        onChange={(e) => updateMonth(month.id, { year: parseInt(e.target.value) })}
+                        onChange={(value) => updateMonth(month.id, { year: parseInt(value) })}
                       />
                     </div>
                     <div className="space-y-1.5">
