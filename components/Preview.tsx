@@ -219,8 +219,8 @@ export const Preview: React.FC<Props> = ({ state, bannerState, setBannerState })
                                                             <div className="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center mb-2">
                                                                 <CalendarDays size={24} className="text-slate-400" />
                                                             </div>
-                                                            <p className="font-medium text-slate-600">No dates generated</p>
-                                                            <p className="text-xs max-w-[200px] mx-auto">Select days of the week in the sidebar to automatically generate the schedule rows.</p>
+                                                            <p className="font-medium text-slate-600">{t.noDatesTitle}</p>
+                                                            <p className="text-xs max-w-[200px] mx-auto">{t.noDatesDesc}</p>
                                                         </div>
                                                     </td>
                                                 </tr>

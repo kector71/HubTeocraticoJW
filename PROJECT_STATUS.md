@@ -23,7 +23,7 @@
     *   **Diseño Compacto:** Se redujo el ancho de la barra lateral (320px) y el tamaño de los botones de "Subir banner" y "Crear Mes".
     *   **Mejoras Visuales:** Se reemplazaron los selectores de Plantilla, Mes y **Año** por componentes `Custom Select` con diseño premium.
     *   **Corrección de Textos:** Se cambió "MICRO" por "Micrófono" en el programa de Acomodadores.
-    *   **Localización:** Los encabezados de las tablas (incluyendo el nombre del mes) y los selectores ahora se traducen automáticamente según el idioma seleccionado.
+    *   **Localización:** Los encabezados de las tablas (incluyendo el nombre del mes) y los selectores ahora se traducen automáticamente según el idioma seleccionado. También se tradujo el mensaje de "No hay fechas generadas".
 
 ## 🚀 Siguientes Pasos (Pendientes):
 *   **Despliegue Final:** (Completado) Cambios sincronizados.

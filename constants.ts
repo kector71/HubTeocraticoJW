@@ -78,6 +78,8 @@ export const TRANSLATIONS = {
     assignedGroup: "GRUPO ASIGNADO",
     groupName: "Nombre del Grupo",
     newMonth: "Nuevo Mes",
+    noDatesTitle: "No se generaron fechas",
+    noDatesDesc: "Selecciona los días de la semana en la barra lateral para generar automáticamente las filas del programa.",
   },
   en: {
     appTitle: "Hub Teocrático JW",
@@ -116,6 +118,8 @@ export const TRANSLATIONS = {
     assignedGroup: "ASSIGNED GROUP",
     groupName: "Group Name",
     newMonth: "New Month",
+    noDatesTitle: "No dates generated",
+    noDatesDesc: "Select days of the week in the sidebar to automatically generate the schedule rows.",
   },
   pt: {
     appTitle: "Hub Teocrático JW",
@@ -154,6 +158,8 @@ export const TRANSLATIONS = {
     assignedGroup: "GRUPO DESIGNADO",
     groupName: "Nome do Grupo",
     newMonth: "Novo Mês",
+    noDatesTitle: "Nenhuma data gerada",
+    noDatesDesc: "Selecione os dias da semana na barra lateral para gerar automaticamente as linhas da programação.",
   },
   fr: {
     appTitle: "Hub Teocrático JW",
@@ -192,6 +198,8 @@ export const TRANSLATIONS = {
     assignedGroup: "GROUPE ASSIGNÉ",
     groupName: "Nom du Groupe",
     newMonth: "Nouveau Mois",
+    noDatesTitle: "Aucune date générée",
+    noDatesDesc: "Sélectionnez les jours de la semaine dans la barre latérale pour générer automatiquement les lignes du programme.",
   },
   it: {
     appTitle: "Hub Teocrático JW",
@@ -230,6 +238,8 @@ export const TRANSLATIONS = {
     assignedGroup: "GRUPPO ASSEGNATO",
     groupName: "Nome del Gruppo",
     newMonth: "Nuovo Mese",
+    noDatesTitle: "Nessuna data generata",
+    noDatesDesc: "Seleziona i giorni della settimana nella barra laterale per generare automaticamente le righe del programma.",
   },
   ru: {
     appTitle: "Hub Teocrático JW",
@@ -268,6 +278,8 @@ export const TRANSLATIONS = {
     assignedGroup: "НАЗНАЧЕННАЯ ГРУППА",
     groupName: "Название группы",
     newMonth: "Новый месяц",
+    noDatesTitle: "Даты не созданы",
+    noDatesDesc: "Выберите дни недели на боковой панели, чтобы автоматически создать строки расписания.",
   },
   pl: {
     appTitle: "Hub Teocrático JW",
@@ -306,6 +318,8 @@ export const TRANSLATIONS = {
     assignedGroup: "PRZYPISANA GRUPA",
     groupName: "Nazwa grupy",
     newMonth: "Nowy miesiąc",
+    noDatesTitle: "Nie wygenerowano dat",
+    noDatesDesc: "Wybierz dni tygodnia na pasku bocznym, aby automatycznie wygenerować wiersze harmonogramu.",
   }
 };
 
