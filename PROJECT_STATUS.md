@@ -22,6 +22,7 @@
     *   **Soporte Tablet:** Se extendió el diseño de pestañas móvil a las tablets y **iPad Pro** (Punto de corte personalizado: 1050px para evitar afectar a portátiles pequeños).
     *   **Diseño Compacto:** Se redujo el ancho de la barra lateral (320px) y el tamaño de los botones de "Subir banner" y "Crear Mes".
     *   **Mejoras Visuales:** Se reemplazaron los selectores de Plantilla, Mes y **Año** por componentes `Custom Select` con diseño premium.
+    *   **Corrección de Textos:** Se cambió "MICRO" por "Micrófono" en el programa de Acomodadores.
 
 ## 🚀 Siguientes Pasos (Pendientes):
 *   **Despliegue Final:** (Completado) Cambios sincronizados.
