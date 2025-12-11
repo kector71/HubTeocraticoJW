@@ -24,6 +24,7 @@
     *   **Mejoras Visuales:** Se reemplazaron los selectores de Plantilla, Mes y **Año** por componentes `Custom Select` con diseño premium.
     *   **Corrección de Textos:** Se cambió "MICRO" por "Micrófono" en el programa de Acomodadores.
     *   **Localización:** Los encabezados de las tablas (incluyendo el nombre del mes) y los selectores ahora se traducen automáticamente según el idioma seleccionado. También se tradujo el mensaje de "No hay fechas generadas".
+    *   **Modo Oscuro Premium:** Se refinó la paleta de colores oscuros usando tonos más profundos (Slate 950/900), bordes sutiles y efectos de transparencia en las tarjetas para una experiencia visual superior.
 
 ## 🚀 Siguientes Pasos (Pendientes):
 *   **Despliegue Final:** (Completado) Cambios sincronizados.

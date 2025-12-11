@@ -55,9 +55,9 @@ export const Select: React.FC<SelectProps> = ({
                 type="button"
                 onClick={() => !disabled && setIsOpen(!isOpen)}
                 disabled={disabled}
-                className={`w-full flex items-center justify-between rounded-lg border bg-white dark:bg-slate-800 px-3 py-2.5 text-sm font-medium transition-all outline-none focus:ring-2 focus:ring-primary/50 disabled:opacity-50 disabled:cursor-not-allowed ${isOpen
+                className={`w-full flex items-center justify-between rounded-lg border bg-white dark:bg-black/20 px-3 py-2.5 text-sm font-medium transition-all outline-none focus:ring-2 focus:ring-primary/50 disabled:opacity-50 disabled:cursor-not-allowed ${isOpen
                     ? 'border-primary ring-2 ring-primary/20'
-                    : 'border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600'
+                    : 'border-slate-200 dark:border-white/10 hover:border-slate-300 dark:hover:border-white/20'
                     }`}
             >
                 <span className={`block truncate ${!selectedOption ? 'text-slate-400' : 'text-slate-700 dark:text-slate-200'}`}>
@@ -70,7 +70,7 @@ export const Select: React.FC<SelectProps> = ({
             </button>
 
             {(isOpen && !disabled) && (
-                <div className="absolute z-50 mt-1 w-full overflow-hidden rounded-xl bg-white dark:bg-slate-800 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none text-sm animate-in fade-in zoom-in-95 duration-100 border border-slate-100 dark:border-slate-700">
+                <div className="absolute z-50 mt-1 w-full overflow-hidden rounded-xl bg-white dark:bg-slate-800 shadow-xl ring-1 ring-black ring-opacity-5 focus:outline-none text-sm animate-in fade-in zoom-in-95 duration-100 border border-slate-100 dark:border-white/10">
                     <div className="max-h-60 overflow-y-auto p-1 scrollbar-thin">
                         {options.map((option) => (
                             <button

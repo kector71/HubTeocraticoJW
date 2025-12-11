@@ -133,7 +133,7 @@ export default function App() {
     <div className="flex flex-col h-screen overflow-hidden text-slate-900 dark:text-slate-100 font-sans">
 
       {/* Header */}
-      <header className="h-16 flex-shrink-0 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-4 min-[1050px]:px-6 flex items-center justify-between z-30 shadow-sm relative">
+      <header className="h-16 flex-shrink-0 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-white/5 px-4 min-[1050px]:px-6 flex items-center justify-between z-30 shadow-sm relative">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center text-white shadow-lg shadow-blue-600/20">
             <LayoutGrid size={24} />
@@ -146,14 +146,14 @@ export default function App() {
           <div className="relative">
             <button
               onClick={(e) => { e.stopPropagation(); setIsLangMenuOpen(!isLangMenuOpen); }}
-              className="flex items-center gap-2 px-3 py-2 rounded-lg bg-slate-50 hover:bg-slate-100 dark:bg-slate-800 dark:hover:bg-slate-700 transition-colors border border-slate-200 dark:border-slate-700"
+              className="flex items-center gap-2 px-3 py-2 rounded-lg bg-slate-50 hover:bg-slate-100 dark:bg-slate-800 dark:hover:bg-slate-700 transition-colors border border-slate-200 dark:border-white/5"
             >
               <Languages size={18} className="text-slate-500 dark:text-slate-400" />
               <span className="text-sm font-medium uppercase">{state.language}</span>
             </button>
 
             {isLangMenuOpen && (
-              <div className="absolute top-full right-0 mt-2 w-40 bg-white dark:bg-slate-800 rounded-xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden py-1 z-50 animate-in fade-in zoom-in-95 duration-200">
+              <div className="absolute top-full right-0 mt-2 w-40 bg-white dark:bg-slate-800 rounded-xl shadow-xl border border-slate-200 dark:border-white/5 overflow-hidden py-1 z-50 animate-in fade-in zoom-in-95 duration-200">
                 {LANGUAGES.map((lang) => (
                   <button
                     key={lang.code}
@@ -184,8 +184,8 @@ export default function App() {
       <div className="flex flex-1 overflow-hidden">
 
         {/* Sidebar */}
-        <aside className={`w-full min-[1050px]:w-[320px] flex-shrink-0 flex flex-col bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 z-10 ${mobileView === 'preview' ? 'hidden min-[1050px]:flex' : 'flex'}`}>
-          <div className="flex border-b border-slate-200 dark:border-slate-800">
+        <aside className={`w-full min-[1050px]:w-[320px] flex-shrink-0 flex flex-col bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-white/5 z-10 ${mobileView === 'preview' ? 'hidden min-[1050px]:flex' : 'flex'}`}>
+          <div className="flex border-b border-slate-200 dark:border-white/5">
             <button
               className={`flex-1 py-4 text-sm font-bold flex items-center justify-center gap-2 border-b-2 transition-colors ${activeTab === 'content' ? 'border-primary text-primary' : 'border-transparent text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'}`}
               onClick={() => setActiveTab('content')}

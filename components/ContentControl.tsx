@@ -136,7 +136,7 @@ export const ContentControl: React.FC<Props> = ({ state, updateState }) => {
         </div>
 
         {/* Banner Upload */}
-        <div className="bg-slate-50 dark:bg-slate-800/50 p-3 rounded-xl border border-slate-200 dark:border-slate-800">
+        <div className="bg-slate-50 dark:bg-slate-800/50 p-3 rounded-xl border border-slate-200 dark:border-white/5">
           <label className="block text-[10px] font-bold text-slate-700 dark:text-slate-300 mb-2 uppercase">
             {t.banner}
           </label>
@@ -173,7 +173,7 @@ export const ContentControl: React.FC<Props> = ({ state, updateState }) => {
 
         <div className="space-y-5">
           {state.months.map((month, index) => (
-            <div key={month.id} className="group border border-slate-200 dark:border-slate-800 rounded-xl bg-white dark:bg-slate-900 shadow-sm hover:shadow-md transition-shadow">
+            <div key={month.id} className="group border border-slate-200 dark:border-white/5 rounded-xl bg-white dark:bg-slate-800/40 shadow-sm hover:shadow-md transition-shadow">
 
               {/* Month Header */}
               <div
@@ -238,7 +238,7 @@ export const ContentControl: React.FC<Props> = ({ state, updateState }) => {
                   </div>
 
                   {/* Day Selector */}
-                  <div className="bg-slate-50 dark:bg-slate-800/30 p-3 rounded-xl border border-dashed border-slate-200 dark:border-slate-800">
+                  <div className="bg-slate-50 dark:bg-black/20 p-3 rounded-xl border border-dashed border-slate-200 dark:border-white/10">
                     <span className="text-[10px] uppercase font-bold text-slate-400 mb-2 block text-center">{t.meetingDay}</span>
                     <div className="flex justify-between gap-1">
                       {['D', 'L', 'M', 'X', 'J', 'V', 'S'].map((day, i) => (
@@ -301,7 +301,7 @@ export const ContentControl: React.FC<Props> = ({ state, updateState }) => {
                                 <label className="col-span-1 space-y-1">
                                   <span className="text-[9px] font-bold text-slate-400 uppercase tracking-tight">{t.auditorium}</span>
                                   <input
-                                    className="w-full rounded-md border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs h-8 px-2 focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-all"
+                                    className="w-full rounded-md border border-slate-200 dark:border-slate-700 bg-white dark:bg-black/20 text-xs h-8 px-2 focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-all"
                                     value={week.auditorium}
                                     onChange={(e) => updateWeek(month.id, week.id, 'auditorium', e.target.value)}
                                   />
