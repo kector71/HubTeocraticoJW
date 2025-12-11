@@ -122,7 +122,7 @@ export const Preview: React.FC<Props> = ({ state, bannerState, setBannerState })
                     </div>
 
                     {/* Banner Area */}
-                    <div className="relative w-full h-48 bg-slate-100 rounded-lg overflow-hidden mb-8 group border border-slate-200">
+                    <div className="relative w-full h-48 bg-zinc-100 rounded-lg overflow-hidden mb-8 group border border-zinc-200">
                         {bannerState.image ? (
                             <div className="w-full h-full relative overflow-hidden">
                                 <img
@@ -138,7 +138,7 @@ export const Preview: React.FC<Props> = ({ state, bannerState, setBannerState })
                                 />
                             </div>
                         ) : (
-                            <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-400">
+                            <div className="absolute inset-0 flex flex-col items-center justify-center text-zinc-400">
                                 <ImageIcon size={48} className="mb-2 opacity-50" />
                                 <p className="text-sm font-medium">{t.previewPlaceholder}</p>
                             </div>
@@ -175,7 +175,7 @@ export const Preview: React.FC<Props> = ({ state, bannerState, setBannerState })
                             const dates = getDatesForWeeks(month);
                             // We render as many rows as dates generated, picking data from month.weeks index
                             return (
-                                <div key={month.id} className="rounded-lg overflow-hidden border border-slate-200">
+                                <div key={month.id} className="rounded-lg overflow-hidden border border-zinc-200">
                                     <table className="w-full border-collapse">
                                         <thead>
                                             <tr style={getStyleString(state.styles.header)}>
@@ -198,13 +198,13 @@ export const Preview: React.FC<Props> = ({ state, bannerState, setBannerState })
                                             {dates.length > 0 ? dates.map((dateStr, idx) => {
                                                 const weekData = month.weeks[idx] || { id: '', door: '', auditorium: '', mic1: '', mic2: '', group: '' };
                                                 return (
-                                                    <tr key={idx} className={`transition-colors hover:bg-blue-50/50 dark:hover:bg-blue-900/10 ${idx % 2 === 0 ? 'bg-white' : 'bg-slate-50'}`}>
-                                                        <td className="p-3 text-center font-bold border-r border-slate-200">{dateStr}</td>
+                                                    <tr key={idx} className={`transition-colors hover:bg-blue-50/50 dark:hover:bg-blue-900/10 ${idx % 2 === 0 ? 'bg-white' : 'bg-zinc-50'}`}>
+                                                        <td className="p-3 text-center font-bold border-r border-zinc-200">{dateStr}</td>
                                                         {state.template === 'acomodadores' ? (
                                                             <>
-                                                                <td className="p-3 text-center border-r border-slate-200">{weekData.door}</td>
-                                                                <td className="p-3 text-center border-r border-slate-200">{weekData.auditorium}</td>
-                                                                <td className="p-3 text-center border-r border-slate-200">{weekData.mic1}</td>
+                                                                <td className="p-3 text-center border-r border-zinc-200">{weekData.door}</td>
+                                                                <td className="p-3 text-center border-r border-zinc-200">{weekData.auditorium}</td>
+                                                                <td className="p-3 text-center border-r border-zinc-200">{weekData.mic1}</td>
                                                                 <td className="p-3 text-center">{weekData.mic2}</td>
                                                             </>
                                                         ) : (
@@ -214,12 +214,12 @@ export const Preview: React.FC<Props> = ({ state, bannerState, setBannerState })
                                                 );
                                             }) : (
                                                 <tr>
-                                                    <td colSpan={5} className="p-12 text-center text-slate-400">
+                                                    <td colSpan={5} className="p-12 text-center text-zinc-400">
                                                         <div className="flex flex-col items-center justify-center gap-2">
-                                                            <div className="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center mb-2">
-                                                                <CalendarDays size={24} className="text-slate-400" />
+                                                            <div className="w-12 h-12 rounded-full bg-zinc-100 flex items-center justify-center mb-2">
+                                                                <CalendarDays size={24} className="text-zinc-400" />
                                                             </div>
-                                                            <p className="font-medium text-slate-600">{t.noDatesTitle}</p>
+                                                            <p className="font-medium text-zinc-600">{t.noDatesTitle}</p>
                                                             <p className="text-xs max-w-[200px] mx-auto">{t.noDatesDesc}</p>
                                                         </div>
                                                     </td>
@@ -233,7 +233,7 @@ export const Preview: React.FC<Props> = ({ state, bannerState, setBannerState })
                     </div>
 
                     {/* Footer */}
-                    <div className="mt-8 pt-6 border-t border-slate-100 text-center">
+                    <div className="mt-8 pt-6 border-t border-zinc-100 text-center">
                         <div
                             style={getStyleString(state.styles.footer)}
                             dangerouslySetInnerHTML={{ __html: state.styles.footerText }}

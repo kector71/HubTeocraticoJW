@@ -57,20 +57,20 @@ export const Select: React.FC<SelectProps> = ({
                 disabled={disabled}
                 className={`w-full flex items-center justify-between rounded-lg border bg-white dark:bg-black/20 px-3 py-2.5 text-sm font-medium transition-all outline-none focus:ring-2 focus:ring-primary/50 disabled:opacity-50 disabled:cursor-not-allowed ${isOpen
                     ? 'border-primary ring-2 ring-primary/20'
-                    : 'border-slate-200 dark:border-white/10 hover:border-slate-300 dark:hover:border-white/20'
+                    : 'border-zinc-200 dark:border-white/10 hover:border-zinc-300 dark:hover:border-white/20'
                     }`}
             >
-                <span className={`block truncate ${!selectedOption ? 'text-slate-400' : 'text-slate-700 dark:text-slate-200'}`}>
+                <span className={`block truncate ${!selectedOption ? 'text-zinc-400' : 'text-zinc-700 dark:text-zinc-200'}`}>
                     {selectedOption ? selectedOption.label : placeholder}
                 </span>
                 <ChevronDown
                     size={16}
-                    className={`text-slate-400 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
+                    className={`text-zinc-400 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
                 />
             </button>
 
             {(isOpen && !disabled) && (
-                <div className="absolute z-50 mt-1 w-full overflow-hidden rounded-xl bg-white dark:bg-slate-800 shadow-xl ring-1 ring-black ring-opacity-5 focus:outline-none text-sm animate-in fade-in zoom-in-95 duration-100 border border-slate-100 dark:border-white/10">
+                <div className="absolute z-50 mt-1 w-full overflow-hidden rounded-xl bg-white dark:bg-zinc-800 shadow-xl ring-1 ring-black ring-opacity-5 focus:outline-none text-sm animate-in fade-in zoom-in-95 duration-100 border border-zinc-100 dark:border-white/10">
                     <div className="max-h-60 overflow-y-auto p-1 scrollbar-thin">
                         {options.map((option) => (
                             <button
@@ -79,7 +79,7 @@ export const Select: React.FC<SelectProps> = ({
                                 onClick={() => handleSelect(option.value)}
                                 className={`relative flex w-full select-none items-center justify-between py-2 px-3 cursor-pointer transition-colors rounded-lg mb-0.5 last:mb-0 ${option.value === value
                                     ? 'bg-primary/10 text-primary font-bold'
-                                    : 'text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700/50'
+                                    : 'text-zinc-700 dark:text-zinc-200 hover:bg-zinc-50 dark:hover:bg-zinc-700/50'
                                     }`}
                             >
                                 <span className="block truncate text-left">{option.label}</span>
