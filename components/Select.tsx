@@ -56,8 +56,8 @@ export const Select: React.FC<SelectProps> = ({
                 onClick={() => !disabled && setIsOpen(!isOpen)}
                 disabled={disabled}
                 className={`w-full flex items-center justify-between rounded-lg border bg-white dark:bg-slate-800 px-3 py-2.5 text-sm font-medium transition-all outline-none focus:ring-2 focus:ring-primary/50 disabled:opacity-50 disabled:cursor-not-allowed ${isOpen
-                        ? 'border-primary ring-2 ring-primary/20'
-                        : 'border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600'
+                    ? 'border-primary ring-2 ring-primary/20'
+                    : 'border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600'
                     }`}
             >
                 <span className={`block truncate ${!selectedOption ? 'text-slate-400' : 'text-slate-700 dark:text-slate-200'}`}>
@@ -70,25 +70,27 @@ export const Select: React.FC<SelectProps> = ({
             </button>
 
             {(isOpen && !disabled) && (
-                <div className="absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-xl bg-white dark:bg-slate-800 py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm animate-in fade-in zoom-in-95 duration-100 scrollbar-thin border border-slate-100 dark:border-slate-700">
-                    {options.map((option) => (
-                        <button
-                            key={option.value}
-                            type="button"
-                            onClick={() => handleSelect(option.value)}
-                            className={`relative flex w-full select-none items-center justify-between py-2.5 pl-3 pr-9 cursor-pointer transition-colors ${option.value === value
+                <div className="absolute z-50 mt-1 w-full overflow-hidden rounded-xl bg-white dark:bg-slate-800 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none text-sm animate-in fade-in zoom-in-95 duration-100 border border-slate-100 dark:border-slate-700">
+                    <div className="max-h-60 overflow-y-auto p-1 scrollbar-thin">
+                        {options.map((option) => (
+                            <button
+                                key={option.value}
+                                type="button"
+                                onClick={() => handleSelect(option.value)}
+                                className={`relative flex w-full select-none items-center justify-between py-2 px-3 cursor-pointer transition-colors rounded-lg mb-0.5 last:mb-0 ${option.value === value
                                     ? 'bg-primary/10 text-primary font-bold'
                                     : 'text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700/50'
-                                }`}
-                        >
-                            <span className="block truncate text-left">{option.label}</span>
-                            {option.value === value && (
-                                <span className="absolute inset-y-0 right-0 flex items-center pr-3 text-primary">
-                                    <Check size={16} aria-hidden="true" />
-                                </span>
-                            )}
-                        </button>
-                    ))}
+                                    }`}
+                            >
+                                <span className="block truncate text-left">{option.label}</span>
+                                {option.value === value && (
+                                    <span className="flex items-center text-primary">
+                                        <Check size={16} aria-hidden="true" />
+                                    </span>
+                                )}
+                            </button>
+                        ))}
+                    </div>
                 </div>
             )}
         </div>

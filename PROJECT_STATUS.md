@@ -21,7 +21,7 @@
     *   **Mejoras de UI:** Botones flotantes ajustados para no superponerse con la navegación.
     *   **Soporte Tablet:** Se extendió el diseño de pestañas móvil a las tablets y **iPad Pro** (Punto de corte personalizado: 1050px para evitar afectar a portátiles pequeños).
     *   **Diseño Compacto:** Se redujo el ancho de la barra lateral (320px) y el tamaño de los botones de "Subir banner" y "Crear Mes".
-    *   **Mejoras Visuales:** Se reemplazaron los selectores nativos por componentes `Custom Select` con diseño premium y soporte Dark Mode.
+    *   **Mejoras Visuales:** Se reemplazaron los selectores nativos por componentes `Custom Select` con diseño premium, soporte Dark Mode y scrollbar integrado.
 
 ## 🚀 Siguientes Pasos (Pendientes):
 *   **Despliegue Final:** (Completado) Cambios sincronizados.
