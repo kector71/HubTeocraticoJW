@@ -114,15 +114,15 @@ export const Preview: React.FC<Props> = ({ state, bannerState, setBannerState })
             >
                 <div className="p-6 flex flex-col h-full flex-grow relative">
 
-                    {/* Title - Absolutely positioned to not affect flow */}
+                    {/* Title - Absolutely positioned */}
                     <div className="absolute top-6 left-0 w-full px-6 text-center z-10 pointer-events-none">
                         <h2 style={getStyleString(state.styles.title)} className="pointer-events-auto inline-block">
                             {state.template === 'acomodadores' ? t.previewTitleUshers : t.previewTitleCleaning}
                         </h2>
                     </div>
 
-                    {/* Banner Area - First in flow to anchor layout, with margin for Title */}
-                    <div className="relative w-full h-48 bg-zinc-100 rounded-lg overflow-hidden mb-4 mt-16 group border border-zinc-200 shrink-0">
+                    {/* Banner Area - Absolutely positioned fixed place */}
+                    <div className="absolute top-24 left-6 right-6 h-48 bg-zinc-100 rounded-lg overflow-hidden group border border-zinc-200">
                         {bannerState.image ? (
                             <div className="w-full h-full relative overflow-hidden">
                                 <img
@@ -169,8 +169,8 @@ export const Preview: React.FC<Props> = ({ state, bannerState, setBannerState })
                         </div>
                     </div>
 
-                    {/* Dynamic Content Tables */}
-                    <div className="space-y-4 flex-grow">
+                    {/* Dynamic Content Tables - Pushed down to clear absolute header */}
+                    <div className="flex-grow mt-[260px] space-y-4">
                         {state.months.map(month => {
                             const dates = getDatesForWeeks(month);
                             // We render as many rows as dates generated, picking data from month.weeks index
