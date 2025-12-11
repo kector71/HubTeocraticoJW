@@ -114,13 +114,6 @@ export const Preview: React.FC<Props> = ({ state, bannerState, setBannerState })
             >
                 <div className="p-6 flex flex-col h-full flex-grow">
 
-                    {/* Title */}
-                    <div className="text-center mb-4">
-                        <h2 style={getStyleString(state.styles.title)}>
-                            {state.template === 'acomodadores' ? t.previewTitleUshers : t.previewTitleCleaning}
-                        </h2>
-                    </div>
-
                     {/* Banner Area */}
                     <div className="relative w-full h-48 bg-zinc-100 rounded-lg overflow-hidden mb-4 group border border-zinc-200">
                         {bannerState.image ? (
@@ -167,6 +160,13 @@ export const Preview: React.FC<Props> = ({ state, bannerState, setBannerState })
                                 <ZoomIn size={16} className="text-white" />
                             </div>
                         </div>
+                    </div>
+
+                    {/* Title */}
+                    <div className="text-center mb-4">
+                        <h2 style={getStyleString(state.styles.title)}>
+                            {state.template === 'acomodadores' ? t.previewTitleUshers : t.previewTitleCleaning}
+                        </h2>
                     </div>
 
                     {/* Dynamic Content Tables */}
