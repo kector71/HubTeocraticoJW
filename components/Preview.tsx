@@ -150,7 +150,7 @@ export const Preview: React.FC<Props> = ({ state, bannerState, setBannerState })
                 className="w-[816px] min-h-[1056px] bg-white shadow-xl text-black flex flex-col transition-all origin-top"
                 style={{ transform: `scale(${scale})` }}
             >
-                <div className="flex flex-col h-full flex-grow relative">
+                <div className="flex flex-col h-full flex-grow relative pb-8">
 
                     {/* Title - Absolutely positioned at the TOP with Inline Styles */}
                     <div
@@ -232,18 +232,18 @@ export const Preview: React.FC<Props> = ({ state, bannerState, setBannerState })
                                     <table className="w-full border-collapse">
                                         <thead>
                                             <tr style={getStyleString(state.styles.header)}>
-                                                <th className="p-2 text-center border-r border-white/30 w-1/4">
+                                                <th className="p-2 text-center border-r border-white/30 w-1/4" style={getStyleString(state.styles.header)}>
                                                     {getMonthName(month.monthIndex, state.language).toUpperCase()}
                                                 </th>
                                                 {state.template === 'acomodadores' ? (
                                                     <>
-                                                        <th className="p-2 text-center border-r border-white/30">{t.door}</th>
-                                                        <th className="p-2 text-center border-r border-white/30">{t.auditorium}</th>
-                                                        <th className="p-2 text-center border-r border-white/30">{t.mic1}</th>
-                                                        <th className="p-2 text-center">{t.mic2}</th>
+                                                        <th className="p-2 text-center border-r border-white/30" style={getStyleString(state.styles.header)}>{t.door}</th>
+                                                        <th className="p-2 text-center border-r border-white/30" style={getStyleString(state.styles.header)}>{t.auditorium}</th>
+                                                        <th className="p-2 text-center border-r border-white/30" style={getStyleString(state.styles.header)}>{t.mic1}</th>
+                                                        <th className="p-2 text-center" style={getStyleString(state.styles.header)}>{t.mic2}</th>
                                                     </>
                                                 ) : (
-                                                    <th className="p-2 text-center">{t.assignedGroup}</th>
+                                                    <th className="p-2 text-center" style={getStyleString(state.styles.header)}>{t.assignedGroup}</th>
                                                 )}
                                             </tr>
                                         </thead>

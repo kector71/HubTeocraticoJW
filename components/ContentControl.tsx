@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { AppState, MonthData, TemplateType, WeekData } from '../types';
 import { TRANSLATIONS, getMonthName } from '../constants';
-import { PlusCircle, Trash2, ChevronDown, ChevronUp, Upload, Plus } from 'lucide-react';
+import { PlusCircle, Trash2, ChevronDown, ChevronUp, Upload, Plus, Check } from 'lucide-react';
 import { Select } from './Select';
 
 interface Props {
@@ -19,7 +19,10 @@ export const ContentControl: React.FC<Props> = ({ state, updateState }) => {
   };
 
   const toggleWeek = (id: string) => {
-    setOpenWeeks(prev => ({ ...prev, [id]: !prev[id] }));
+    setOpenWeeks(prev => {
+      const isOpen = prev[id] === undefined ? true : prev[id];
+      return { ...prev, [id]: !isOpen };
+    });
   };
 
   const handleBannerUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -150,15 +153,32 @@ export const ContentControl: React.FC<Props> = ({ state, updateState }) => {
             />
             <label
               htmlFor="banner-upload"
-              className="flex items-center justify-center gap-3 w-full p-2.5 rounded-lg border-2 border-dashed border-zinc-300 dark:border-zinc-600 hover:border-primary dark:hover:border-primary cursor-pointer transition-all bg-white dark:bg-zinc-900 group-hover:bg-zinc-50 dark:group-hover:bg-zinc-800"
+              className={`flex items-center justify-center gap-3 w-full p-2.5 rounded-lg border-2 border-dashed cursor-pointer transition-all ${state.banner.image
+                ? 'border-green-300 dark:border-green-800/50 hover:border-green-500 bg-green-50/30 dark:bg-green-900/10 hover:bg-green-50 dark:hover:bg-green-900/20'
+                : 'border-red-300 dark:border-red-800/50 hover:border-red-500 bg-red-50/30 dark:bg-red-900/10 hover:bg-red-50 dark:hover:bg-red-900/20'
+                }`}
             >
-              <div className="w-8 h-8 rounded-full bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center group-hover:scale-110 transition-transform">
-                <Upload size={16} className="text-primary" />
+              <div className={`w-8 h-8 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform ${state.banner.image
+                ? 'bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400'
+                : 'bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400'
+                }`}>
+                {state.banner.image ? <Check size={16} /> : <Upload size={16} />}
               </div>
-              <span className="text-xs font-medium text-zinc-500 dark:text-zinc-400">{t.uploadBanner}</span>
+              <span className={`text-xs font-medium ${state.banner.image ? 'text-green-700 dark:text-green-300' : 'text-red-700 dark:text-red-300'}`}>
+                {state.banner.image ? 'Banner Activo' : t.uploadBanner}
+              </span>
             </label>
             {state.banner.image && (
-              <div className="absolute top-1/2 -tranzinc-y-1/2 right-3 w-2 h-2 rounded-full bg-green-500 animate-pulse" title="Banner cargado" />
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  updateState({ banner: { ...state.banner, image: null } });
+                }}
+                className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 text-green-600 hover:text-red-500 hover:bg-red-50 rounded-md transition-colors z-10"
+                title="Eliminar Banner"
+              >
+                <Trash2 size={14} />
+              </button>
             )}
           </div>
         </div>
@@ -263,31 +283,31 @@ export const ContentControl: React.FC<Props> = ({ state, updateState }) => {
                     </div>
 
                     {month.weeks.map((week, idx) => (
-                      <div key={week.id} className="relative pl-4 border-l-2 border-zinc-100 dark:border-zinc-800 hover:border-primary/50 transition-colors">
+                      <div key={week.id} className="border-l-2 border-zinc-100 dark:border-zinc-800 hover:border-primary/50 transition-colors pl-3">
                         <div
-                          className="flex items-center justify-between cursor-pointer group/week py-1"
+                          className="flex items-center justify-between py-2 cursor-pointer select-none group/week"
                           onClick={() => toggleWeek(week.id)}
                         >
-                          <span className={`text-xs font-bold uppercase transition-colors ${openWeeks[week.id] ? 'text-primary' : 'text-zinc-500 group-hover/week:text-zinc-700 dark:group-hover/week:text-zinc-300'}`}>
-                            {t.week} {idx + 1}
-                          </span>
-                          <div className="flex items-center gap-1 opacity-100 sm:opacity-0 group-hover/week:opacity-100 transition-opacity">
-                            {openWeeks[week.id] ? <ChevronUp size={14} className="text-zinc-400" /> : <ChevronDown size={14} className="text-zinc-400" />}
+                          <div className="flex items-center gap-2">
+                            <span className={`text-xs font-bold uppercase transition-colors ${openWeeks[week.id] ? 'text-primary' : 'text-zinc-500 group-hover/week:text-zinc-700 dark:group-hover/week:text-zinc-300'}`}>
+                              {t.week} {idx + 1}
+                            </span>
+                            <div className={`transition-transform duration-200 ${openWeeks[week.id] ? 'rotate-180' : ''}`}>
+                              <ChevronDown size={14} className="text-zinc-400 group-hover/week:text-primary transition-colors" />
+                            </div>
                           </div>
+
+                          <button
+                            className="p-1.5 text-zinc-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-md transition-all opacity-0 group-hover/week:opacity-100"
+                            onClick={(e) => { e.stopPropagation(); removeWeek(month.id, week.id); }}
+                            title={t.remove}
+                          >
+                            <Trash2 size={14} />
+                          </button>
                         </div>
 
-                        {/* Remove Week Bubble */}
-                        <button
-                          className="absolute -left-[9px] top-1.5 w-4 h-4 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 rounded-full flex items-center justify-center text-zinc-300 hover:text-red-500 hover:border-red-500 transition-colors z-10"
-                          onClick={(e) => { e.stopPropagation(); removeWeek(month.id, week.id); }}
-                          title={t.remove}
-                        >
-                          <span className="sr-only">Remove</span>
-                          <div className="w-1 h-1 rounded-full bg-current" />
-                        </button>
-
                         {(openWeeks[week.id] === undefined || openWeeks[week.id]) && (
-                          <div className="mt-2 grid grid-cols-2 gap-2.5 animate-in slide-in-from-left-2 duration-200">
+                          <div className="pb-3 grid grid-cols-2 gap-2.5 animate-in slide-in-from-left-2 duration-200">
                             {state.template === 'acomodadores' ? (
                               <>
                                 <label className="col-span-1 space-y-1">

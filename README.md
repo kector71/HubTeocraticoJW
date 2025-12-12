@@ -3,7 +3,7 @@
   <p><strong>Generador de Programas de Cartelera de Congregación</strong></p>
   
   <p>
-    <a href="https://kector71.github.io/HubTeocratico/">
+    <a href="https://kector71.github.io/HubTeocraticoJW/">
       <strong>🔗 ABRIR APLICACIÓN WEB</strong>
     </a>
   </p>

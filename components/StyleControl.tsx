@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleConfig } from '../types';
 import { FONTS } from '../constants';
-import { Bold, Italic, Underline, CaseUpper, ChevronDown, ChevronUp, Settings, Plus, Minus } from 'lucide-react';
+import { Bold, Italic, Underline, CaseUpper, ChevronDown, Settings, Plus, Minus, Type } from 'lucide-react';
 
 interface Props {
   title: string;
@@ -13,6 +13,21 @@ interface Props {
 }
 
 export const StyleControl: React.FC<Props> = ({ title, config, onChange, isOpen, onToggle, showBackground }) => {
+  const [isFontMenuOpen, setIsFontMenuOpen] = React.useState(false);
+  const fontMenuRef = React.useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (fontMenuRef.current && !fontMenuRef.current.contains(event.target as Node)) {
+        setIsFontMenuOpen(false);
+      }
+    };
+    if (isFontMenuOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [isFontMenuOpen]);
+
   const handleChange = (key: keyof StyleConfig, value: any) => {
     onChange({ ...config, [key]: value });
   };
@@ -22,142 +37,199 @@ export const StyleControl: React.FC<Props> = ({ title, config, onChange, isOpen,
     handleChange('fontSize', newSize);
   };
 
+  const currentFontName = config.fontFamily.split(',')[0].replace(/['"]/g, '');
+
   return (
-    <div className="group border border-zinc-200 dark:border-zinc-800 rounded-xl bg-white dark:bg-zinc-900 shadow-sm hover:shadow-md transition-all">
+    <div className="group border border-zinc-200/80 dark:border-zinc-700/60 rounded-lg bg-white dark:bg-zinc-900/50 shadow-sm transition-all hover:shadow-md hover:border-blue-200 dark:hover:border-blue-800/40">
+      {/* Header - Compacto */}
       <div
-        className={`flex items-center justify-between p-3.5 cursor-pointer select-none transition-colors rounded-t-xl ${isOpen ? 'bg-zinc-50 dark:bg-zinc-800 border-b border-zinc-100 dark:border-zinc-700' : 'group-hover:bg-zinc-50 dark:group-hover:bg-zinc-800/50'}`}
+        className={`flex items-center justify-between p-2 cursor-pointer select-none transition-all ${isOpen ? 'bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/30 dark:to-indigo-950/20 border-b border-blue-100 dark:border-blue-900/50' : 'hover:bg-zinc-50/80 dark:hover:bg-zinc-800/40'} rounded-t-lg ${isOpen ? '' : 'rounded-b-lg'}`}
         onClick={onToggle}
       >
-        <div className="flex items-center gap-2.5">
-          <div className={`w-7 h-7 rounded-lg flex items-center justify-center transition-colors ${isOpen ? 'bg-blue-500/10 text-blue-600 dark:text-blue-400' : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-500 group-hover:bg-zinc-200 dark:group-hover:bg-zinc-700'}`}>
-            <Settings size={14} className={isOpen ? 'animate-pulse' : ''} />
+        <div className="flex items-center gap-2">
+          <div className={`w-7 h-7 rounded-lg flex items-center justify-center transition-all shadow-sm ${isOpen ? 'bg-gradient-to-br from-blue-500 to-indigo-600 text-white scale-105' : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400 group-hover:bg-zinc-200 dark:group-hover:bg-zinc-700'}`}>
+            <Settings size={14} className={`transition-transform duration-500 ${isOpen ? 'rotate-180' : ''}`} />
           </div>
-          <h4 className={`text-sm font-semibold transition-colors ${isOpen ? 'text-zinc-800 dark:text-zinc-100' : 'text-zinc-600 dark:text-zinc-400'}`}>{title}</h4>
+          <div className="flex flex-col">
+            <h4 className={`text-xs font-bold transition-colors ${isOpen ? 'text-blue-700 dark:text-blue-300' : 'text-zinc-700 dark:text-zinc-300'}`}>{title}</h4>
+            {!isOpen && (
+              <span className="text-[9px] text-zinc-500 dark:text-zinc-500 font-medium">
+                {currentFontName} • {config.fontSize}px
+              </span>
+            )}
+          </div>
         </div>
-        <div className={`transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}>
-          <ChevronDown size={16} className="text-zinc-400 group-hover:text-zinc-600 dark:group-hover:text-zinc-300" />
+        <div className={`w-6 h-6 flex items-center justify-center rounded-lg transition-all duration-300 ${isOpen ? 'bg-white/60 dark:bg-zinc-800/60 rotate-180 text-blue-600 dark:text-blue-400' : 'text-zinc-400 group-hover:text-zinc-600 dark:group-hover:text-zinc-300 hover:bg-zinc-100/80 dark:hover:bg-zinc-800/40'}`}>
+          <ChevronDown size={14} strokeWidth={2.5} />
         </div>
       </div>
 
       {isOpen && (
-        <div className="p-4 space-y-4 animate-in slide-in-from-top-2 duration-300">
-          <div className="grid grid-cols-[1fr_auto_auto] gap-2.5 items-end">
-            {/* Font Family */}
-            <label className="flex flex-col w-full space-y-1.5">
-              <span className="text-[10px] font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wide">Fuente</span>
-              <div className="relative">
-                <select
-                  className="w-full appearance-none rounded-lg border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 py-2 pl-2.5 pr-8 text-xs font-medium text-zinc-700 dark:text-zinc-200 focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 dark:focus:border-blue-400 outline-none transition-all"
-                  value={config.fontFamily}
-                  onChange={(e) => handleChange('fontFamily', e.target.value)}
-                >
-                  {FONTS.map(f => (
-                    <option key={f} value={f}>{f.split(',')[0].replace(/['"]/g, '')}</option>
-                  ))}
-                </select>
-                <ChevronDown size={14} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-zinc-400 pointer-events-none" />
-              </div>
-            </label>
+        <div className="p-2.5 space-y-2 animate-in slide-in-from-top-2 fade-in duration-200 bg-gradient-to-b from-white to-zinc-50/30 dark:from-zinc-900/50 dark:to-zinc-900/20 rounded-b-lg">
 
-            {/* Size with +/- buttons */}
-            <label className="flex flex-col space-y-1.5">
-              <span className="text-[10px] font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wide">Tamaño</span>
-              <div className="flex items-center gap-1 bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-lg p-1">
+          {/* Fila 1: Fuente + Tamaño */}
+          <div className="grid grid-cols-2 gap-2">
+
+            {/* Font Family */}
+            <div className="space-y-1" ref={fontMenuRef}>
+              <label className="text-[10px] font-extrabold text-zinc-600 dark:text-zinc-400 uppercase tracking-wide flex items-center gap-1">
+                <Type size={10} className="text-blue-500" />
+                Fuente
+              </label>
+              <div className="relative">
+                <button
+                  className="w-full h-8 flex items-center justify-between px-2.5 rounded-md border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800/70 text-xs font-medium text-zinc-800 dark:text-zinc-100 hover:border-blue-300 dark:hover:border-blue-700 focus:ring-1 focus:ring-blue-500/30 focus:border-blue-500 transition-all outline-none shadow-sm"
+                  onClick={() => setIsFontMenuOpen(!isFontMenuOpen)}
+                >
+                  <span style={{ fontFamily: config.fontFamily }} className="truncate">
+                    {currentFontName}
+                  </span>
+                  <ChevronDown size={12} className={`text-zinc-400 ml-2 transition-transform duration-200 flex-shrink-0 ${isFontMenuOpen ? 'rotate-180 text-blue-500' : ''}`} />
+                </button>
+
+                {isFontMenuOpen && (
+                  <div className="absolute top-full left-0 right-0 mt-1 max-h-48 overflow-y-auto rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 shadow-2xl z-50 animate-in zoom-in-95 duration-150">
+                    <div className="p-1 space-y-0.5">
+                      {FONTS.map(f => {
+                        const name = f.split(',')[0].replace(/['"]/g, '');
+                        const isSelected = f === config.fontFamily;
+                        return (
+                          <button
+                            key={f}
+                            className={`w-full text-left px-2.5 py-1.5 rounded-md text-xs font-medium flex items-center justify-between group/opt transition-all ${isSelected ? 'bg-gradient-to-r from-blue-500 to-indigo-500 text-white shadow-md' : 'text-zinc-700 dark:text-zinc-200 hover:bg-blue-50 dark:hover:bg-blue-950/30 hover:text-blue-600 dark:hover:text-blue-400'}`}
+                            onClick={() => {
+                              handleChange('fontFamily', f);
+                              setIsFontMenuOpen(false);
+                            }}
+                            style={{ fontFamily: f }}
+                          >
+                            <span>{name}</span>
+                            {isSelected && <div className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Font Size */}
+            <div className="space-y-1">
+              <label className="text-[10px] font-extrabold text-zinc-600 dark:text-zinc-400 uppercase tracking-wide flex items-center gap-1">
+                <span className="text-blue-500 text-[9px]">▲</span>
+                Tamaño
+              </label>
+              <div className="flex items-center h-8 bg-white dark:bg-zinc-800/70 border border-zinc-200 dark:border-zinc-700 rounded-md overflow-hidden transition-all hover:border-blue-300 dark:hover:border-blue-700 shadow-sm">
                 <button
                   onClick={() => adjustFontSize(-1)}
-                  className="p-1 rounded hover:bg-white dark:hover:bg-zinc-700 text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300 transition-all"
-                  title="Reducir"
+                  className="w-9 h-full flex items-center justify-center hover:bg-blue-50 dark:hover:bg-blue-950/30 text-zinc-600 hover:text-blue-600 dark:text-zinc-300 dark:hover:text-blue-400 active:bg-blue-100 dark:active:bg-blue-900/40 transition-all border-r border-zinc-200 dark:border-zinc-700"
                 >
-                  <Minus size={14} strokeWidth={2.5} />
+                  <Minus size={13} strokeWidth={2.5} />
                 </button>
-                <input
-                  type="number"
-                  className="w-12 bg-transparent text-xs text-center font-semibold text-zinc-700 dark:text-zinc-200 outline-none"
-                  value={config.fontSize}
-                  onChange={(e) => handleChange('fontSize', parseInt(e.target.value))}
-                />
+                <div className="flex-1 h-full relative flex items-center justify-center">
+                  <input
+                    type="number"
+                    className="w-full h-full bg-transparent text-xs font-bold text-center text-zinc-900 dark:text-zinc-50 outline-none appearance-none px-2"
+                    value={config.fontSize}
+                    onChange={(e) => handleChange('fontSize', parseInt(e.target.value) || 0)}
+                  />
+                  <span className="absolute right-2 text-[9px] text-zinc-400 font-semibold pointer-events-none">px</span>
+                </div>
                 <button
                   onClick={() => adjustFontSize(1)}
-                  className="p-1 rounded hover:bg-white dark:hover:bg-zinc-700 text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300 transition-all"
-                  title="Aumentar"
+                  className="w-9 h-full flex items-center justify-center hover:bg-blue-50 dark:hover:bg-blue-950/30 text-zinc-600 hover:text-blue-600 dark:text-zinc-300 dark:hover:text-blue-400 active:bg-blue-100 dark:active:bg-blue-900/40 transition-all border-l border-zinc-200 dark:border-zinc-700"
                 >
-                  <Plus size={14} strokeWidth={2.5} />
+                  <Plus size={13} strokeWidth={2.5} />
                 </button>
               </div>
-            </label>
-
-            {/* Color */}
-            <label className="flex flex-col items-center space-y-1.5">
-              <span className="text-[10px] font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wide">Color</span>
-              <div className="relative w-9 h-9 rounded-lg overflow-hidden ring-2 ring-zinc-200 dark:ring-zinc-700 hover:ring-blue-500 dark:hover:ring-blue-400 transition-all shadow-sm cursor-pointer group/color">
-                <input
-                  type="color"
-                  className="absolute inset-0 opacity-0 w-full h-full cursor-pointer z-10"
-                  value={config.color}
-                  onChange={(e) => handleChange('color', e.target.value)}
-                />
-                <div
-                  className="w-full h-full group-hover/color:scale-110 transition-transform"
-                  style={{ backgroundColor: config.color }}
-                />
-              </div>
-            </label>
-          </div>
-
-          <div className="flex items-center justify-between gap-3 p-2.5 bg-zinc-50 dark:bg-zinc-800/50 rounded-lg border border-zinc-200 dark:border-zinc-800">
-
-            {showBackground && (
-              <label className="flex items-center gap-2.5 cursor-pointer group/bg">
-                <div className="relative w-7 h-7 rounded-lg overflow-hidden ring-2 ring-zinc-200 dark:ring-zinc-700 group-hover/bg:ring-blue-500 dark:group-hover/bg:ring-blue-400 transition-all shadow-sm">
-                  <input
-                    type="color"
-                    className="absolute inset-0 opacity-0 w-full h-full cursor-pointer z-10"
-                    value={config.backgroundColor || '#ffffff'}
-                    onChange={(e) => handleChange('backgroundColor', e.target.value)}
-                  />
-                  <div
-                    className="w-full h-full group-hover/bg:scale-110 transition-transform"
-                    style={{ backgroundColor: config.backgroundColor || '#ffffff' }}
-                  />
-                </div>
-                <span className="text-xs font-medium text-zinc-600 dark:text-zinc-400 group-hover/bg:text-zinc-800 dark:group-hover/bg:text-zinc-200 transition-colors">Fondo</span>
-              </label>
-            )}
-
-            <div className="flex items-center gap-1 ml-auto">
-              <button
-                className={`p-1.5 rounded-lg transition-all ${config.fontWeight === 'bold' ? 'bg-blue-500 text-white shadow-sm shadow-blue-500/50' : 'text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800'}`}
-                onClick={() => handleChange('fontWeight', config.fontWeight === 'bold' ? 'normal' : 'bold')}
-                title="Negrita"
-              >
-                <Bold size={16} strokeWidth={2.5} />
-              </button>
-              <button
-                className={`p-1.5 rounded-lg transition-all ${config.fontStyle === 'italic' ? 'bg-blue-500 text-white shadow-sm shadow-blue-500/50' : 'text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800'}`}
-                onClick={() => handleChange('fontStyle', config.fontStyle === 'italic' ? 'normal' : 'italic')}
-                title="Cursiva"
-              >
-                <Italic size={16} strokeWidth={2.5} />
-              </button>
-              <button
-                className={`p-1.5 rounded-lg transition-all ${config.textDecoration === 'underline' ? 'bg-blue-500 text-white shadow-sm shadow-blue-500/50' : 'text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800'}`}
-                onClick={() => handleChange('textDecoration', config.textDecoration === 'underline' ? 'none' : 'underline')}
-                title="Subrayado"
-              >
-                <Underline size={16} strokeWidth={2.5} />
-              </button>
-
-              <div className="w-px h-4 bg-zinc-300 dark:bg-zinc-700 mx-0.5"></div>
-
-              <button
-                className={`p-1.5 rounded-lg transition-all ${config.textTransform === 'uppercase' ? 'bg-blue-500 text-white shadow-sm shadow-blue-500/50' : 'text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800'}`}
-                onClick={() => handleChange('textTransform', config.textTransform === 'uppercase' ? 'none' : 'uppercase')}
-                title="Mayúsculas"
-              >
-                <CaseUpper size={16} strokeWidth={2.5} />
-              </button>
             </div>
           </div>
+
+          {/* Fila 2: Color + Formato integrados */}
+          <div className="space-y-1">
+            <label className="text-[10px] font-extrabold text-zinc-600 dark:text-zinc-400 uppercase tracking-wide flex items-center gap-1">
+              <span className="text-blue-500 text-[9px]">●</span>
+              Color y Formato
+            </label>
+            <div className="grid grid-cols-2 gap-2">
+              {/* Colores */}
+              <div className={`flex ${showBackground ? 'flex-col gap-1.5' : 'justify-center'} p-1.5 bg-gradient-to-br from-zinc-50 to-zinc-100/50 dark:from-zinc-800/50 dark:to-zinc-900/30 rounded-md border border-zinc-200 dark:border-zinc-700/60`}>
+                {/* Text Color */}
+                <div className="flex items-center gap-2 p-1.5 bg-white dark:bg-zinc-800/70 rounded-md border border-zinc-200 dark:border-zinc-700 hover:border-blue-300 dark:hover:border-blue-700 transition-all shadow-sm">
+                  <div className="relative group/color">
+                    <div
+                      className="w-6 h-6 rounded-md border-2 border-white dark:border-zinc-600 shadow-md overflow-hidden relative cursor-pointer group-hover/color:scale-110 transition-transform ring-1 ring-zinc-300 dark:ring-zinc-600"
+                      style={{ backgroundColor: config.color }}
+                    >
+                      <input
+                        type="color"
+                        className="absolute inset-0 opacity-0 w-full h-full cursor-pointer"
+                        value={config.color}
+                        onChange={(e) => handleChange('color', e.target.value)}
+                        title="Color de Texto"
+                      />
+                    </div>
+                  </div>
+                  <span className="text-[9px] font-bold text-zinc-700 dark:text-zinc-300">Texto</span>
+                </div>
+
+                {/* Background Color */}
+                {showBackground && (
+                  <div className="flex items-center gap-2 p-1.5 bg-white dark:bg-zinc-800/70 rounded-md border border-zinc-200 dark:border-zinc-700 hover:border-blue-300 dark:hover:border-blue-700 transition-all shadow-sm">
+                    <div className="relative group/bg">
+                      <div
+                        className="w-6 h-6 rounded-md border-2 border-white dark:border-zinc-600 shadow-md overflow-hidden relative cursor-pointer group-hover/bg:scale-110 transition-transform ring-1 ring-zinc-300 dark:ring-zinc-600"
+                        style={{ backgroundColor: config.backgroundColor || '#ffffff' }}
+                      >
+                        <input
+                          type="color"
+                          className="absolute inset-0 opacity-0 w-full h-full cursor-pointer"
+                          value={config.backgroundColor || '#ffffff'}
+                          onChange={(e) => handleChange('backgroundColor', e.target.value)}
+                          title="Color de Fondo"
+                        />
+                      </div>
+                    </div>
+                    <span className="text-[9px] font-bold text-zinc-700 dark:text-zinc-300">Fondo</span>
+                  </div>
+                )}
+              </div>
+
+              {/* Botones de Formato */}
+              <div className="grid grid-cols-2 gap-1.5 p-1.5 bg-gradient-to-br from-zinc-50 to-zinc-100/50 dark:from-zinc-800/50 dark:to-zinc-900/30 rounded-md border border-zinc-200 dark:border-zinc-700/60">
+                <button
+                  className={`p-2 rounded-md transition-all flex items-center justify-center ${config.fontWeight === 'bold' ? 'bg-gradient-to-br from-blue-500 to-indigo-600 text-white shadow-lg scale-105' : 'bg-white dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/30 shadow-sm'}`}
+                  onClick={() => handleChange('fontWeight', config.fontWeight === 'bold' ? 'normal' : 'bold')}
+                  title="Negrita"
+                >
+                  <Bold size={15} strokeWidth={config.fontWeight === 'bold' ? 3 : 2.5} />
+                </button>
+                <button
+                  className={`p-2 rounded-md transition-all flex items-center justify-center ${config.fontStyle === 'italic' ? 'bg-gradient-to-br from-blue-500 to-indigo-600 text-white shadow-lg scale-105' : 'bg-white dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/30 shadow-sm'}`}
+                  onClick={() => handleChange('fontStyle', config.fontStyle === 'italic' ? 'normal' : 'italic')}
+                  title="Cursiva"
+                >
+                  <Italic size={15} strokeWidth={2.5} />
+                </button>
+                <button
+                  className={`p-2 rounded-md transition-all flex items-center justify-center ${config.textDecoration === 'underline' ? 'bg-gradient-to-br from-blue-500 to-indigo-600 text-white shadow-lg scale-105' : 'bg-white dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/30 shadow-sm'}`}
+                  onClick={() => handleChange('textDecoration', config.textDecoration === 'underline' ? 'none' : 'underline')}
+                  title="Subrayado"
+                >
+                  <Underline size={15} strokeWidth={2.5} />
+                </button>
+                <button
+                  className={`p-2 rounded-md transition-all flex items-center justify-center ${config.textTransform === 'uppercase' ? 'bg-gradient-to-br from-blue-500 to-indigo-600 text-white shadow-lg scale-105' : 'bg-white dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/30 shadow-sm'}`}
+                  onClick={() => handleChange('textTransform', config.textTransform === 'uppercase' ? 'none' : 'uppercase')}
+                  title="Mayúsculas"
+                >
+                  <CaseUpper size={15} strokeWidth={2.5} />
+                </button>
+              </div>
+            </div>
+          </div>
+
         </div>
       )}
     </div>

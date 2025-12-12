@@ -92,8 +92,8 @@ export default function App() {
       const opt = {
         margin: 0,
         filename: 'program.pdf',
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2, useCORS: true, logging: false },
+        image: { type: 'jpeg', quality: 1.0 },
+        html2canvas: { scale: 2, useCORS: true, logging: false, letterRendering: true },
         jsPDF: { unit: 'px', format: [816, 1056], orientation: 'portrait' }
       };
       window.html2pdf().from(content).set(opt).toPdf().get('pdf').then((pdf: any) => {
@@ -102,21 +102,60 @@ export default function App() {
     }
   };
 
-  const handleDownloadPDF = () => {
+  const handleDownloadPDF = async () => {
     const content = document.getElementById('pdf-content');
     if (!content || typeof window.html2pdf === 'undefined') return;
 
-    // Calculate dynamic height to ensure single page
-    const height = Math.max(content.offsetHeight + 20, 1056); // Min height of A4
+    try {
+      // 1. Create a clone to render "cleanly" without UI transforms
+      const clone = content.cloneNode(true) as HTMLElement;
 
-    const opt = {
-      margin: 0,
-      filename: `program-${state.template}.pdf`,
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 2, useCORS: true, logging: false, scrollY: 0 },
-      jsPDF: { unit: 'px', format: [816, height], orientation: 'portrait' }
-    };
-    window.html2pdf().from(content).set(opt).save();
+      // 2. Reset transforms on the clone so it's 1:1 scale
+      clone.style.transform = 'scale(1)';
+      clone.style.margin = '0';
+
+      // 3. Place it in a hidden container that preserves layout
+      const container = document.createElement('div');
+      container.style.position = 'fixed';
+      container.style.top = '-10000px';
+      container.style.left = '0';
+      container.style.zIndex = '-100'; // Behind everything
+      container.style.width = '816px'; // Force exact width
+      container.appendChild(clone);
+      document.body.appendChild(container);
+
+      // 4. Calculate height from clone AFTER it's in DOM (ensures accurate measurement)
+      // Wait for layout to settle
+      await new Promise(resolve => setTimeout(resolve, 100));
+      const height = Math.max(clone.scrollHeight + 80, 1056); // Use scrollHeight + extra padding
+
+      const opt = {
+        margin: 0,
+        filename: `program-${state.template}.pdf`,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: {
+          scale: 2, // Standard Definition (safer)
+          useCORS: true,
+          logging: false,
+          letterRendering: true,
+          windowWidth: 816 // Force canvas width
+        },
+        jsPDF: { unit: 'px', format: [816, height], orientation: 'portrait' }
+      };
+
+      // 5. Open PDF in new window (browser blocks downloads)
+      await window.html2pdf().from(clone).set(opt).toPdf().get('pdf').then((pdf: any) => {
+        const blobUrl = pdf.output('bloburl');
+        window.open(blobUrl, '_blank');
+      });
+
+      // 6. Cleanup
+      document.body.removeChild(container);
+
+    } catch (err: any) {
+      console.error("PDF Export Error:", err);
+      alert(`Error al exportar PDF: ${err.message || 'Error desconocido'}. Intente con un banner menos pesado.`);
+    }
   };
 
   const LANGUAGES: { code: Language; label: string }[] = [
@@ -252,13 +291,15 @@ export default function App() {
         </aside>
 
         {/* Preview Area */}
-        <main className={`flex-1 bg-zinc-100 dark:bg-black/20 overflow-auto p-4 min-[1050px]:p-8 flex justify-center ${mobileView === 'editor' ? 'hidden min-[1050px]:flex' : 'flex'}`}>
-          <div className="relative">
-            <Preview
-              state={state}
-              bannerState={state.banner}
-              setBannerState={(b) => updateState({ banner: b })}
-            />
+        <main className={`flex-1 bg-zinc-100 dark:bg-black/20 overflow-auto ${mobileView === 'editor' ? 'hidden min-[1050px]:block' : 'block'}`}>
+          <div className="min-h-full flex justify-center p-4 min-[1050px]:p-8 pb-60">
+            <div className="relative h-fit">
+              <Preview
+                state={state}
+                bannerState={state.banner}
+                setBannerState={(b) => updateState({ banner: b })}
+              />
+            </div>
           </div>
         </main>
 
