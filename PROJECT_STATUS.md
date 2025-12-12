@@ -40,24 +40,18 @@
     *   **Modo Oscuro Premium (Zinc):** Se eliminó el tinte azul del modo oscuro cambiando la paleta de colores de 'Slate' a 'Zinc' (Gris neutro de metal). El fondo ahora es casi negro puro (`#09090b`), eliminando la sensación de "azul".
     *   **PDF Optimizado:** Se redujeron los márgenes internos y los espacios verticales en el documento PDF para aprovechar mejor el espacio de la hoja.
 
+### 📅 12 de Diciembre de 2025:
+1.  **Guía de Usuario Interactiva (VitePress):**
+    *   **Implementación:** Se integró VitePress en el proyecto (`docs/guide`).
+    *   **Contenido:** Se crearon páginas de inicio, introducción y características.
+    *   **Diseño:** Se configuró el tema con los colores de la marca (Azul/Indigo).
+    *   **Despliegue:** Configurado para generar salida en `docs/guide`, accesible vía GitHub Pages.
+
 ## 🚀 Siguientes Pasos (Opcionales):
 
-### 📖 Crear Guía de Usuario Interactiva (Pendiente):
-Crear una guía de uso tipo [Organized Guide](https://guide.organized-app.com/) para ayudar a los usuarios a entender cómo usar Hub Teocrático JW.
+### 🎨 Mejoras Visuales (Pendiente):
+*   **Icono de Tema:** Revisar y mejorar el icono del selector de temas en el encabezado.
 
-**Tecnología Recomendada:** VitePress
-- Framework moderno basado en Vue/Vite (consistente con el stack actual del proyecto)
-- Diseño premium con tema claro/oscuro incluido
-- Búsqueda integrada y navegación lateral
-- Fácil de mantener (solo archivos Markdown)
-- Soporte multilenguaje incorporado
-
-**Alcance de la Guía:**
-1. **Configurar VitePress** en el proyecto
-2. **Estructurar el contenido** (páginas de introducción, características, cómo usar, FAQ)
-3. **Personalizar diseño** con los colores de la marca (azul degradado)
-4. **Escribir documentación inicial** en español (con opción de expandir a otros idiomas)
-5. **Desplegar en GitHub Pages** (ej: `https://kector71.github.io/HubTeocratico/guide/`)
 
 **Tiempo Estimado:** 4-6 horas
 
