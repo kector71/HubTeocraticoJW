@@ -155,7 +155,7 @@ export const Preview: React.FC<Props> = ({ state, bannerState, setBannerState })
                     {/* Title - Absolutely positioned at the TOP with Inline Styles */}
                     <div
                         className="w-full px-6 text-center z-20 pointer-events-none"
-                        style={{ position: 'absolute', top: '2rem', left: 0 }}
+                        style={{ position: 'absolute', top: '1rem', left: 0 }}
                     >
                         <h2
                             ref={titleRef}
@@ -174,7 +174,7 @@ export const Preview: React.FC<Props> = ({ state, bannerState, setBannerState })
                     {/* Banner Area - Absolutely positioned BELOW title with Inline Styles */}
                     <div
                         className="bg-zinc-100 rounded-lg overflow-hidden group border border-zinc-200 z-10 w-auto"
-                        style={{ position: 'absolute', top: '6.5rem', left: '1.5rem', right: '1.5rem', height: '12rem' }}
+                        style={{ position: 'absolute', top: '5.5rem', left: '1.5rem', right: '1.5rem', height: '12rem' }}
                     >
                         {bannerState.image ? (
                             <div className="w-full h-full relative overflow-hidden">
@@ -223,7 +223,7 @@ export const Preview: React.FC<Props> = ({ state, bannerState, setBannerState })
                     </div>
 
                     {/* Dynamic Content Tables - Pushed down to clear absolute header */}
-                    <div className="flex-grow mt-[320px] px-6 space-y-4">
+                    <div className="flex-grow mt-[295px] px-6 space-y-4">
                         {state.months.map(month => {
                             const dates = getDatesForWeeks(month);
                             // We render as many rows as dates generated, picking data from month.weeks index

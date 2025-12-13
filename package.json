@@ -12,6 +12,8 @@
     "docs:preview": "vitepress preview guide"
   },
   "dependencies": {
+    "jspdf": "^3.0.4",
+    "jspdf-autotable": "^5.0.2",
     "lucide-react": "^0.556.0",
     "react": "^19.2.1",
     "react-dom": "^19.2.1"

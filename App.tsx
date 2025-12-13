@@ -11,6 +11,7 @@ export default function App() {
   const [mobileView, setMobileView] = useState<'editor' | 'preview'>('editor');
   const [openStyles, setOpenStyles] = useState<Record<string, boolean>>({ title: false, header: false, cell: false, footer: false });
   const [isLangMenuOpen, setIsLangMenuOpen] = useState(false);
+  const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
 
   const [state, setState] = useState<AppState>({
     template: 'acomodadores',
@@ -103,58 +104,93 @@ export default function App() {
   };
 
   const handleDownloadPDF = async () => {
-    const content = document.getElementById('pdf-content');
-    if (!content || typeof window.html2pdf === 'undefined') return;
-
+    setIsGeneratingPDF(true);
     try {
-      // 1. Create a clone to render "cleanly" without UI transforms
-      const clone = content.cloneNode(true) as HTMLElement;
+      const content = document.getElementById('pdf-content');
+      if (!content) {
+        alert('No se pudo encontrar el contenido para exportar');
+        return;
+      }
 
-      // 2. Reset transforms on the clone so it's 1:1 scale
-      clone.style.transform = 'scale(1)';
-      clone.style.margin = '0';
+      // Check if html2pdf is available
+      if (typeof window.html2pdf === 'undefined') {
+        alert('La librería html2pdf no está disponible. Por favor recarga la página.');
+        return;
+      }
 
-      // 3. Place it in a hidden container that preserves layout
-      const container = document.createElement('div');
-      container.style.position = 'fixed';
-      container.style.top = '-10000px';
-      container.style.left = '0';
-      container.style.zIndex = '-100'; // Behind everything
-      container.style.width = '816px'; // Force exact width
-      container.appendChild(clone);
-      document.body.appendChild(container);
+      // Save original transform and remove it temporarily
+      const originalTransform = content.style.transform;
+      const originalTransformOrigin = content.style.transformOrigin;
+      content.style.transform = 'none';
+      content.style.transformOrigin = 'top left';
 
-      // 4. Calculate height from clone AFTER it's in DOM (ensures accurate measurement)
-      // Wait for layout to settle
+      // Wait a bit for the DOM to update
       await new Promise(resolve => setTimeout(resolve, 100));
-      const height = Math.max(clone.scrollHeight + 80, 1056); // Use scrollHeight + extra padding
 
       const opt = {
         margin: 0,
-        filename: `program-${state.template}.pdf`,
-        image: { type: 'jpeg', quality: 0.98 },
+        filename: `programa-${state.template}-${new Date().toISOString().split('T')[0]}.pdf`,
+        image: { type: 'png', quality: 1.0 }, // PNG for lossless quality (better than JPEG)
         html2canvas: {
-          scale: 2, // Standard Definition (safer)
+          scale: 3,  // Optimized for speed and quality (2448x3168 px)
+          dpi: 300,  // Print quality DPI
           useCORS: true,
+          allowTaint: true,  // Allow cross-origin images
           logging: false,
           letterRendering: true,
-          windowWidth: 816 // Force canvas width
+          backgroundColor: '#ffffff',
+          width: 816,   // Exact element width
+          height: 1056, // Exact element height
+          windowWidth: 816,  // Exact width for better rendering
+          windowHeight: 1056,  // Exact height for better rendering
+          imageTimeout: 0,  // No timeout for image loading
+          x: 0,  // Start from left edge
+          y: 0,  // Start from top edge
+          scrollX: 0,  // No horizontal scroll offset
+          scrollY: 0,  // No vertical scroll offset
+          onclone: (clonedDoc: Document) => {
+            // Ensure all fonts are loaded in cloned document
+            const clonedElement = clonedDoc.getElementById('pdf-content');
+            if (clonedElement) {
+              // Remove any transforms in the cloned document too
+              clonedElement.style.transform = 'none';
+              clonedElement.style.transformOrigin = 'top left';
+              (clonedElement.style as any).fontSmooth = 'always';
+              (clonedElement.style as any).webkitFontSmoothing = 'antialiased';
+              (clonedElement.style as any).MozOsxFontSmoothing = 'grayscale';
+            }
+          }
         },
-        jsPDF: { unit: 'px', format: [816, height], orientation: 'portrait' }
+        jsPDF: {
+          unit: 'px',
+          format: [816, 1056],
+          orientation: 'portrait',
+          compress: true,
+          precision: 16,  // Maximum precision for vectors
+          putOnlyUsedFonts: true,  // Optimize font embedding
+          floatPrecision: 16  // Maximum float precision
+        }
       };
 
-      // 5. Open PDF in new window (browser blocks downloads)
-      await window.html2pdf().from(clone).set(opt).toPdf().get('pdf').then((pdf: any) => {
-        const blobUrl = pdf.output('bloburl');
-        window.open(blobUrl, '_blank');
-      });
+      // Generate and download PDF directly (most reliable method)
+      await window.html2pdf().from(content).set(opt).save();
 
-      // 6. Cleanup
-      document.body.removeChild(container);
+
+      // Restore original transform
+      content.style.transform = originalTransform;
+      content.style.transformOrigin = originalTransformOrigin;
 
     } catch (err: any) {
       console.error("PDF Export Error:", err);
-      alert(`Error al exportar PDF: ${err.message || 'Error desconocido'}. Intente con un banner menos pesado.`);
+      alert(`Error al exportar PDF: ${err.message || 'Error desconocido'}.`);
+
+      // Restore transform even if there's an error
+      const content = document.getElementById('pdf-content');
+      if (content) {
+        content.style.transform = content.style.transform || 'scale(1)';
+      }
+    } finally {
+      setIsGeneratingPDF(false);
     }
   };
 
@@ -314,10 +350,16 @@ export default function App() {
           </button>
           <button
             onClick={handleDownloadPDF}
-            className="w-14 h-14 bg-primary text-white rounded-full shadow-xl shadow-primary/30 flex items-center justify-center hover:bg-primary/90 transition-transform hover:scale-105"
-            title="Download PDF"
+            disabled={isGeneratingPDF}
+            className={`w-14 h-14 bg-primary text-white rounded-full shadow-xl shadow-primary/30 flex items-center justify-center transition-transform ${isGeneratingPDF ? 'opacity-50 cursor-wait' : 'hover:bg-primary/90 hover:scale-105'
+              }`}
+            title={isGeneratingPDF ? "Generando PDF..." : "Download PDF"}
           >
-            <Download size={24} />
+            {isGeneratingPDF ? (
+              <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
+            ) : (
+              <Download size={24} />
+            )}
           </button>
         </div>
 
@@ -338,6 +380,36 @@ export default function App() {
             <span className="text-xs">Vista Previa</span>
           </button>
         </div>
+
+        {/* PDF Generation Loading Modal */}
+        {isGeneratingPDF && (
+          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[100] flex items-center justify-center">
+            <div className="bg-white dark:bg-zinc-800 rounded-2xl shadow-2xl p-8 max-w-md w-full mx-4">
+              <div className="flex flex-col items-center gap-6">
+                {/* Spinner */}
+                <div className="relative">
+                  <div className="w-16 h-16 border-4 border-primary/20 rounded-full"></div>
+                  <div className="absolute top-0 left-0 w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+                </div>
+
+                {/* Text */}
+                <div className="text-center">
+                  <h3 className="text-xl font-bold text-zinc-900 dark:text-white mb-2">
+                    Generando PDF
+                  </h3>
+                  <p className="text-sm text-zinc-600 dark:text-zinc-400">
+                    Por favor espera mientras se crea tu documento de alta calidad...
+                  </p>
+                </div>
+
+                {/* Progress Bar */}
+                <div className="w-full bg-zinc-200 dark:bg-zinc-700 rounded-full h-2 overflow-hidden">
+                  <div className="h-full bg-gradient-to-r from-primary to-blue-400 rounded-full animate-pulse"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
       </div>
     </div>

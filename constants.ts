@@ -13,8 +13,9 @@ export const DEFAULT_STYLE: StyleConfig = {
 export const INITIAL_STYLES: StylesState = {
   title: {
     ...DEFAULT_STYLE,
-    fontFamily: "'Times New Roman', serif",
-    fontSize: 24,
+    fontFamily: "Verdana, sans-serif",
+    fontSize: 44,
+    fontWeight: 'bold',
     color: '#0f172a',
     textTransform: 'uppercase',
   },
