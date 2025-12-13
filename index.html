@@ -17,7 +17,7 @@
       theme: {
         extend: {
           colors: {
-            primary: "#2b72ee",
+            primary: "rgb(var(--color-primary) / <alpha-value>)",
             "background-light": "#f6f6f8",
             "background-dark": "#101722"
           },
@@ -30,6 +30,11 @@
     }
   </script>
   <style>
+    :root {
+      --color-primary: 37 99 235;
+      /* Initial Blue */
+    }
+
     /* Custom Scrollbar */
     ::-webkit-scrollbar {
       width: 8px;

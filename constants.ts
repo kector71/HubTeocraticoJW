@@ -1,4 +1,16 @@
-import { StyleConfig, StylesState } from './types';
+import { StyleConfig, StylesState, ThemeColor } from './types';
+
+export const THEME_COLORS: ThemeColor[] = [
+  { id: 'blue', label: 'Azul (Default)', color: '#2563eb', rgb: '37 99 235' }, // blue-600
+  { id: 'indigo', label: 'Índigo', color: '#4f46e5', rgb: '79 70 229' }, // indigo-600
+  { id: 'violet', label: 'Violeta', color: '#7c3aed', rgb: '124 58 237' }, // violet-600
+  { id: 'rose', label: 'Rosa', color: '#e11d48', rgb: '225 29 72' }, // rose-600
+  { id: 'amber', label: 'Ambar', color: '#d97706', rgb: '217 119 6' }, // amber-600
+  { id: 'emerald', label: 'Esmeralda', color: '#059669', rgb: '5 150 105' }, // emerald-600
+  { id: 'cyan', label: 'Cian', color: '#0891b2', rgb: '8 145 178' }, // cyan-600
+  { id: 'slate', label: 'Pizarra', color: '#475569', rgb: '71 85 105' }, // slate-600
+];
+
 
 export const DEFAULT_STYLE: StyleConfig = {
   fontFamily: 'Arial, sans-serif',

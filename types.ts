@@ -52,6 +52,14 @@ export interface AppState {
   banner: BannerState;
   language: Language;
   theme: 'light' | 'dark';
+  colorTheme: string;
+}
+
+export interface ThemeColor {
+  id: string;
+  label: string;
+  color: string; // Hex for UI display
+  rgb: string;   // RGB values for Tailwind variable (e.g. "59 130 246")
 }
 
 declare global {

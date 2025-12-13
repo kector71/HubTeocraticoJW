@@ -267,7 +267,7 @@ export const ContentControl: React.FC<Props> = ({ state, updateState }) => {
                           onClick={() => toggleDay(month.id, i)}
                           className={`w-8 h-8 rounded-lg text-xs font-bold flex items-center justify-center transition-all ${month.selectedDays.includes(i)
                             ? 'bg-primary text-white shadow-lg shadow-primary/30 scale-105'
-                            : 'bg-white dark:bg-zinc-800 text-zinc-400 hover:text-primary hover:bg-blue-50 dark:hover:bg-zinc-700'
+                            : 'bg-white dark:bg-zinc-800 text-zinc-400 hover:text-primary hover:bg-primary/5 dark:hover:bg-zinc-700'
                             }`}
                         >
                           {day}

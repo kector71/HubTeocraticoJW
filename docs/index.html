@@ -17,7 +17,7 @@
       theme: {
         extend: {
           colors: {
-            primary: "#2b72ee",
+            primary: "rgb(var(--color-primary) / <alpha-value>)",
             "background-light": "#f6f6f8",
             "background-dark": "#101722"
           },
@@ -30,6 +30,11 @@
     }
   </script>
   <style>
+    :root {
+      --color-primary: 37 99 235;
+      /* Initial Blue */
+    }
+
     /* Custom Scrollbar */
     ::-webkit-scrollbar {
       width: 8px;
@@ -71,7 +76,7 @@
     }
   </style>
 
-  <script type="module" crossorigin src="./assets/index-C-Hl6Re5.js"></script>
+  <script type="module" crossorigin src="./assets/index-B6kYs4Ct.js"></script>
 </head>
 
 <body class="bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-200">

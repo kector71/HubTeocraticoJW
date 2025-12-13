@@ -24,6 +24,7 @@ Esta aplicación permite generar carteleras de manera profesional y eficiente pa
 
 *   **🎨 Diseño Premium Personalizable**:
     *   Sube tus propios **Banners** e imágenes para encajar con el tema de la congregación.
+    *   **🎨 Temas de Color Dinámicos**: Elige entre 8 colores de marca (Azul, Rosa, Violeta, etc.) que se integran profundamente en toda la interfaz.
     *   Personaliza completamente la **Tipografía, Colores y Tamaños** de todo el documento.
     *   Incluye soporte para **Modo Oscuro**, facilitando su uso en cualquier entorno.
 

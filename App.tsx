@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { LayoutGrid, Moon, Sun, Download, Printer, Settings, Palette, FileText, Languages, Check } from 'lucide-react';
 import { AppState, StylesState, Language } from './types';
-import { INITIAL_STYLES, TRANSLATIONS } from './constants';
+import { INITIAL_STYLES, TRANSLATIONS, THEME_COLORS } from './constants';
 import { ContentControl } from './components/ContentControl';
 import { StyleControl } from './components/StyleControl';
 import { Preview } from './components/Preview';
@@ -11,6 +11,7 @@ export default function App() {
   const [mobileView, setMobileView] = useState<'editor' | 'preview'>('editor');
   const [openStyles, setOpenStyles] = useState<Record<string, boolean>>({ title: false, header: false, cell: false, footer: false });
   const [isLangMenuOpen, setIsLangMenuOpen] = useState(false);
+  const [isThemeMenuOpen, setIsThemeMenuOpen] = useState(false);
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
 
   const [state, setState] = useState<AppState>({
@@ -19,7 +20,8 @@ export default function App() {
     styles: INITIAL_STYLES,
     banner: { image: null, zoom: 1, x: 0, y: 0 },
     language: 'es',
-    theme: typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+    theme: typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light',
+    colorTheme: 'blue'
   });
 
   // Handle Dark Mode
@@ -31,14 +33,23 @@ export default function App() {
     }
   }, [state.theme]);
 
+  // Handle Color Theme
+  useEffect(() => {
+    const themeColor = THEME_COLORS.find(c => c.id === state.colorTheme) || THEME_COLORS[0];
+    document.documentElement.style.setProperty('--color-primary', themeColor.rgb);
+  }, [state.colorTheme]);
+
   // Close menus on click outside
   useEffect(() => {
-    const closeMenu = () => setIsLangMenuOpen(false);
-    if (isLangMenuOpen) {
+    const closeMenu = () => {
+      setIsLangMenuOpen(false);
+      setIsThemeMenuOpen(false);
+    };
+    if (isLangMenuOpen || isThemeMenuOpen) {
       window.addEventListener('click', closeMenu);
     }
     return () => window.removeEventListener('click', closeMenu);
-  }, [isLangMenuOpen]);
+  }, [isLangMenuOpen, isThemeMenuOpen]);
 
   // Initial Month Population
   useEffect(() => {
@@ -246,9 +257,40 @@ export default function App() {
             )}
           </div>
 
+          {/* Theme Color Selector */}
+          <div className="relative">
+            <button
+              onClick={(e) => { e.stopPropagation(); setIsThemeMenuOpen(!isThemeMenuOpen); }}
+              className={`w-10 h-10 rounded-xl bg-zinc-50 border border-zinc-200 dark:bg-zinc-800 dark:border-white/5 flex items-center justify-center hover:bg-zinc-100 dark:hover:bg-zinc-700 transition-colors ${state.colorTheme ? 'text-primary' : 'text-zinc-500 dark:text-zinc-400'}`}
+            >
+              <Palette size={20} />
+            </button>
+
+            {isThemeMenuOpen && (
+              <div className="absolute top-full right-0 mt-2 w-56 bg-white dark:bg-zinc-800 rounded-xl shadow-xl border border-zinc-200 dark:border-white/5 overflow-hidden py-2 z-50 animate-in fade-in zoom-in-95 duration-200">
+                <div className="px-4 py-2 text-xs font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider mb-1">
+                  {t.color}
+                </div>
+                <div className="grid grid-cols-4 gap-2 px-3">
+                  {THEME_COLORS.map((color) => (
+                    <button
+                      key={color.id}
+                      onClick={() => updateState({ colorTheme: color.id })}
+                      className={`w-10 h-10 rounded-full flex items-center justify-center transition-all hover:scale-110 relative group ${state.colorTheme === color.id ? 'ring-2 ring-offset-2 ring-primary ring-offset-white dark:ring-offset-zinc-800' : 'hover:ring-2 hover:ring-offset-1 hover:ring-black/5 dark:hover:ring-white/10'}`}
+                      style={{ backgroundColor: color.color }}
+                      title={color.label}
+                    >
+                      {state.colorTheme === color.id && <Check size={16} className="text-white drop-shadow-md" strokeWidth={3} />}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+
           <button
             onClick={() => updateState({ theme: state.theme === 'light' ? 'dark' : 'light' })}
-            className="w-10 h-10 rounded-full flex items-center justify-center hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+            className="w-10 h-10 rounded-xl bg-zinc-50 border border-zinc-200 dark:bg-zinc-800 dark:border-white/5 flex items-center justify-center hover:bg-zinc-100 dark:hover:bg-zinc-700 transition-colors text-zinc-500 dark:text-zinc-400"
           >
             {state.theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
           </button>
